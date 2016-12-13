@@ -8,5 +8,5 @@
 
 require_once '_functions/_init.php';
 
-$smarty->display('templates/index.tpl');
+$smarty->display('portal/frontend/templates/index.tpl');
 ?>
