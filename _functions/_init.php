@@ -6,7 +6,7 @@
  * Time: 10:53 AM
  */
 
-//error_reporting(0);
+error_reporting(0);
 
 session_start();
 
@@ -23,3 +23,5 @@ spl_autoload_register(function ($class)
     $log->append("loading: $path");
 });
 
+
+require_once 'plugins/smarty-3.1.30/libs/Smarty.class.php';
