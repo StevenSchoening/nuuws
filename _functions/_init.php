@@ -12,7 +12,7 @@ session_start();
 
 ini_set("max_execution_time", 180);
 
-define("LOGDEFAULTPATH", 'c://xampp/htdocs/logs/');
+define("LOGDEFAULTPATH", 'c://xampp/htdocs/logs/'); #comment
 
 spl_autoload_register(function ($class)
 {
