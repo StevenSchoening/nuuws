@@ -6,7 +6,7 @@
  * Date: 10/15/2016
  * Time: 11:41 AM
  */
-class Database implements ISql
+class Database implements iSql
 {
     use LastInstance;
 

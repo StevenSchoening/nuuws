@@ -6,7 +6,7 @@
  * Date: 11/11/2016
  * Time: 9:23 PM
  */
-trait LastInstance
+trait tLastInstance
 {
     private static $instance;
 

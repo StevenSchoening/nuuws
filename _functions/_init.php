@@ -16,11 +16,13 @@ define("LOGDEFAULTPATH", 'c://xampp/htdocs/logs/');
 
 spl_autoload_register(function ($class)
 {
-    include $path = "_classes/$class.php";
+    @include "_classes/$class.php";
+    @include "_classes/interfaces/$class.php";
+    @include "_classes/traits/$class.php";
 
     $log = new Log("classInclude");
 
-    $log->append("loading: $path");
+    $log->append("loading: $class");
 });
 
 

@@ -6,7 +6,7 @@
  * Date: 10/17/2016
  * Time: 4:19 PM
  */
-interface ISql
+interface iSql
 {
     public function select_db($database);
 
