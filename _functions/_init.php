@@ -29,4 +29,3 @@ spl_autoload_register(function ($class)
 require_once 'plugins/smarty-3.1.30/libs/Smarty.class.php';
 
 $smarty = new Smarty;
-$smarty->assign('name', 'Marvin');
