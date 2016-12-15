@@ -12,9 +12,15 @@ session_start();
 
 ini_set("max_execution_time", 180);
 
-define("LOGDEFAULTPATH", 'c://xampp/htdocs/logs/'); #comment
+define("LOGDEFAULTPATH", 'c://xampp/htdocs/logs/');
 
-spl_autoload_register(function ($class)
+# Smarty
+
+require_once 'plugins/smarty-3.1.30/libs/Smarty.class.php';
+
+$smarty = new Smarty;
+
+spl_autoload_register(function ($class)         # gets called if a class is used but not defined
 {
     @include "_classes/$class.php";
     @include "_classes/interfaces/$class.php";
@@ -24,8 +30,3 @@ spl_autoload_register(function ($class)
 
     $log->append("loading: $class");
 });
-
-
-require_once 'plugins/smarty-3.1.30/libs/Smarty.class.php';
-
-$smarty = new Smarty;
