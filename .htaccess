@@ -3,7 +3,7 @@ ErrorDocument 404 /cms/pages/404.php
 RewriteEngine on
 
 # user login
-RewriteRule ^login/(.*)(\/|\\)$         /cms/index.php?page=login&redirect=$1       [NC,L]
+RewriteRule ^login/(.*)(\/|\\)?$        /cms/index.php?page=login&redirect=$1       [NC,L]
 RewriteRule ^login$                     /cms/index.php?page=login                   [NC,L]
 
 RewriteRule ^user/(\d+)/.*$             /cms/index.php?page=user&id=$1              [NC,L] # user pages
