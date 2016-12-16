@@ -8,29 +8,40 @@
  */
 class Crawler
 {
-    private        $content;
+    public         $results       = [];
 
-    private static $whitelist     = [], # Pattern collection about blacklisted Domains/Pages
-                   $requestedURIs = []; # Uris that we're already crawled
+    private static $whiteList     = [], # Pattern collection about white listed domains/pages
+                   $requestedUris = []; # Uris that were already crawled
 
-    function __construct($uri)
+    /**
+     * Crawler constructor.
+     *
+     * @param     $uri string start point
+     * @param int $recursion
+     */
+    function __construct($uri, $recursion = 2)
     {
-        $this->content         = file_get_contents($uri);
+        $this->results[] = $uri;
 
-        if(!in_array($uri, self::$requestedURIs))
+        while($recursion--)
 
-            self::$requestedURIs[] = $uri;
+            $this->results = $this->crawl($this->results);
     }
 
-    public function listLinks()
+    /**
+     * @param $uris string[] uris
+     *
+     * @return string[] $uris & collected uris
+     */
+    private function crawl($uris)
     {
-        $result = $lvl1Result = $this->extractUris($this->content);
+        $result = $uris;
 
-        foreach($lvl1Result as $uri)
+        foreach($uris as $uri)
         {
-            if(!in_array($uri, self::$requestedURIs))
+            if(!in_array($uri, self::$requestedUris))
 
-                self::$requestedURIs[] = $uri;
+                self::$requestedUris[] = $uri;
 
             else
 
@@ -46,6 +57,11 @@ class Crawler
         return $result;
     }
 
+    /**
+     * @param $content string source code
+     *
+     * @return array of uris
+     */
     private function extractUris($content)
     {
         $aTagPat = '/\< a \s [^\>]+ \>/xi'; # alle <a....> tags
@@ -65,7 +81,7 @@ class Crawler
                 $uriValid = FALSE;
                 $uri      = $matches[1][0];
 
-                foreach(self::$whitelist as $pattern)
+                foreach(self::$whiteList as $pattern)
 
                     if(preg_match($pattern, $uri))
 
@@ -80,10 +96,24 @@ class Crawler
         return $result;
     }
 
+    /**
+     * if link results true to pattern
+     * the link will be saved
+     *
+     * @param $pattern string regex pattern
+     */
     public static function addToWhitelist($pattern)
     {
-        if(!in_array($pattern, self::$whitelist))
+        if(!in_array($pattern, self::$whiteList))
 
-            self::$whitelist[] = $pattern;
+            self::$whiteList[] = $pattern;
+    }
+
+    /**
+     * @return array
+     */
+    public function getResults()
+    {
+        return $this->results;
     }
 }
