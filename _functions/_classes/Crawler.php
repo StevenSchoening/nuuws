@@ -8,7 +8,7 @@
  */
 class Crawler
 {
-    public         $results       = [];
+    private        $results       = [];
 
     private static $whiteList     = [],     # Pattern collection about white listed domains/pages
                    $requestedUris = [],     # Uris that were already crawled
@@ -114,8 +114,17 @@ class Crawler
      *
      * @param $pattern string regex pattern
      */
-    public static function addToWhitelist($pattern)
+    public static function addToWhiteList($pattern)
     {
+        if(is_array($pattern))
+        {
+            foreach($pattern as $pat)
+
+                self::addToWhiteList($pat);
+
+            return;
+        }
+
         if(!in_array($pattern, self::$whiteList))
 
             self::$whiteList[] = $pattern;

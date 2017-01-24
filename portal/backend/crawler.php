@@ -12,20 +12,21 @@ $srt = new ScriptRunTime;
 
 #=================== result filters & settings ====================
 
-//ini_set('max_execution_time', 300);
 ini_set('max_execution_time', -1);
 
-# Spiegel URIs
-Crawler::addToWhitelist('#^https?:\/\/\w+\.spiegel\.#i');
+$uriWhiteList = [
+    '#^https?:\/\/\w+\.spiegel\.#i',
+    '#^https?:\/\/\w+\.sueddeutsche\.#i',
+];
 
-# süd deutsche URIs
-Crawler::addToWhitelist('#^https?:\/\/\w+\.sueddeutsche\.#i');
+# Spiegel URIs
+Crawler::addToWhiteList($uriWhiteList);
 
 #========================= start locations ========================
 
 $uris = [
-    'http://www.spiegel.de/' => NULL,
-//    'http://www.sueddeutsche.de/' => NULL,
+    'http://news.google.com/' => NULL,
+    'http://m.spiegel.de' => NULL,
 ];
 
 #========================== crawling ==============================
