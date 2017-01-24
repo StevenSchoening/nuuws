@@ -8,7 +8,7 @@
  */
 class Database implements iSql
 {
-    use LastInstance;
+    use tLastInstance;
 
     private $link;
 
@@ -33,6 +33,7 @@ class Database implements iSql
         $this->link = mysqli_connect($hostname, $username, $password) or $this->dberror();
 
         if ($this->link != null)
+
             mysqli_set_charset($this->link, 'utf8');
     }
 
@@ -85,17 +86,15 @@ class Database implements iSql
 
             if(false)
             {
-                $loc_string=str_replace(' AND','<br>AND',$string);
-                $loc_string=str_replace(' OR','<br>OR',$loc_string);
-                $loc_string=str_replace('WHERE (','WHERE<br>(',$loc_string);
-                $loc_string=str_replace(' WHERE','<br>WHERE',$loc_string);
-                $loc_string=str_replace(' ORDER BY','<br>ORDER BY',$loc_string);
-                $loc_string=str_replace(' LIMIT','<br>LIMIT',$loc_string);
-                $loc_string=str_replace(' FROM','<br>FROM',$loc_string);
+                $loc_string = str_replace(' AND', '<br>AND', $string);
+                $loc_string = str_replace(' OR', '<br>OR', $loc_string);
+                $loc_string = str_replace('WHERE (', 'WHERE<br>(', $loc_string);
+                $loc_string = str_replace(' WHERE', '<br>WHERE', $loc_string);
+                $loc_string = str_replace(' ORDER BY', '<br>ORDER BY', $loc_string);
+                $loc_string = str_replace(' LIMIT', '<br>LIMIT', $loc_string);
+                $loc_string = str_replace(' FROM', '<br>FROM', $loc_string);
 
-                echo '<br><br>==============================================================<br>'.
-                     '<b style="color:#00F">Nur für uns sichtbar:</b><br>'.
-                     '==============================================================<br>'.
+                echo '==============================================================<br>'.
                      'SQL Fehler: <b>' . mysqli_errno($this->link) . '</b><br><br>'.
                      '<b>' . mysqli_error($this->link).'</b><br>'.
                      '==============================================================<br>'.

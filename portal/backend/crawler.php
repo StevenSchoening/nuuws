@@ -14,13 +14,10 @@ $srt = new ScriptRunTime;
 
 ini_set('max_execution_time', -1);
 
-$uriWhiteList = [
+Crawler::addToWhiteList([
     '#^https?:\/\/\w+\.spiegel\.#i',
     '#^https?:\/\/\w+\.sueddeutsche\.#i',
-];
-
-# Spiegel URIs
-Crawler::addToWhiteList($uriWhiteList);
+]);
 
 #========================= start locations ========================
 

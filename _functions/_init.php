@@ -20,6 +20,8 @@ require_once 'plugins/smarty-3.1.30/libs/Smarty.class.php';
 
 $smarty = new Smarty;
 
+# Autoload function
+
 spl_autoload_register(function ($class)         # gets called if a class is used but not defined
 {
     @include "_classes/$class.php";
@@ -30,3 +32,7 @@ spl_autoload_register(function ($class)         # gets called if a class is used
 
     $log->append("loading: $class");
 });
+
+# Database
+
+$db = new Database;

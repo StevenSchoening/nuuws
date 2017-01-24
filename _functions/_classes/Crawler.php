@@ -5,6 +5,7 @@
  * User: Marvin
  * Date: 12/15/2016
  * Time: 12:37 PM
+ * todo robots.txt
  */
 class Crawler
 {
@@ -13,6 +14,9 @@ class Crawler
     private static $whiteList     = [],     # Pattern collection about white listed domains/pages
                    $requestedUris = [],     # Uris that were already crawled
                    $debugMode     = TRUE;   # echo progress
+
+
+
     /**
      * Crawler constructor.
      *
@@ -24,6 +28,10 @@ class Crawler
         $this->results[] = $uri;
 
         $counter         = 0;
+
+        if(!self::robotsAllowed($uri))
+
+            return;
 
         while($recursion--)
         {
@@ -38,6 +46,57 @@ class Crawler
 
             $this->results = $this->crawl($this->results);
         }
+    }
+
+    /**
+     * @param $uri string URI that needs to be searched for a robots.txt file
+     *
+     * @return bool are robots allowed?
+     */
+    private function robotsAllowed($uri)
+    {
+        // parse url to retrieve host and path
+        $parsed = parse_url($uri);
+
+        // location of robots.txt file
+        $robotsTxt = @file("http://{$parsed['host']}/robots.txt");
+
+        // if there isn't a robots, then we're allowed in
+        if(empty($robotsTxt))
+
+            return true;
+
+        $rules       = [];
+        $ruleApplies = FALSE;
+
+        foreach($robotsTxt as $line)
+        {
+            // skip blank lines
+            if(!$line = trim($line))
+
+                continue;
+
+            if($ruleApplies && preg_match('/^\s*Disallow:(.*)/i', $line, $regs))
+            {
+                // an empty rule implies full access - no further tests required
+                if(!$regs[1])
+
+                    return true;
+
+                // add rules that apply to array for testing
+                $rules[] = preg_quote(trim($regs[1]), '/');
+            }
+        }
+
+        foreach($rules as $rule)
+
+            // check if page is disallowed to us
+            if(preg_match("/^$rule/", $parsed['path']))
+
+                return false;
+
+        // page is not disallowed
+        return true;
     }
 
     /**
@@ -169,7 +228,8 @@ class Crawler
 
     function __destruct()
     {
-        Debugger::dump($this->results);
+//        Debugger::dump($this->results);
+        Debugger::dump($this->getInsertQuery());
     }
 
     private function getSource($uri)
