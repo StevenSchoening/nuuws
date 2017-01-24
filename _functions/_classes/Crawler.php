@@ -10,9 +10,9 @@ class Crawler
 {
     public         $results       = [];
 
-    private static $whiteList     = [], # Pattern collection about white listed domains/pages
-                   $requestedUris = []; # Uris that were already crawled
-
+    private static $whiteList     = [],     # Pattern collection about white listed domains/pages
+                   $requestedUris = [],     # Uris that were already crawled
+                   $debugMode     = TRUE;   # echo progress
     /**
      * Crawler constructor.
      *
@@ -23,9 +23,21 @@ class Crawler
     {
         $this->results[] = $uri;
 
+        $counter         = 0;
+
         while($recursion--)
+        {
+            if(self::$debugMode)
+            {
+                $counter++;
+
+                echo "<p>Loop #$counter</p>";
+
+                flush();ob_flush();flush();ob_flush();
+            }
 
             $this->results = $this->crawl($this->results);
+        }
     }
 
     /**
@@ -47,7 +59,7 @@ class Crawler
 
                 continue;
 
-            $result = array_merge($result, $this->extractUris(file_get_contents($uri)));
+            $result = array_merge($result, $this->extractUris($this->getSource($uri)));
         }
 
         $result = array_unique($result);
@@ -110,10 +122,60 @@ class Crawler
     }
 
     /**
+     * @return boolean
+     */
+    public static function isDebugMode()
+    {
+        return self::$debugMode;
+    }
+
+    /**
+     * @param boolean $debugMode
+     */
+    public static function setDebugMode($debugMode)
+    {
+        self::$debugMode = $debugMode;
+    }
+
+    /**
      * @return array
      */
     public function getResults()
     {
         return $this->results;
     }
+
+    private function getInsertQuery()
+    {
+        $query = 'INSERT INTO TABLE_NAME (`id`, `uri`, `ts`) VALUES ';
+
+        foreach($this->results as $result)
+
+            if(!in_array($result, self::$requestedUris))
+
+                $query .= "(NULL, '$result', NULL), ";
+
+        return substr($query, 0, -2);
+    }
+
+    function __destruct()
+    {
+        Debugger::dump($this->results);
+    }
+
+    private function getSource($uri)
+    {
+        $sw     = new Stopwatch;
+        $source = file_get_contents($uri);
+
+        if(self::$debugMode)
+        {
+            echo "<p>{$sw->getTime()}: $uri</p>";
+
+            flush(); ob_flush(); flush(); ob_flush();
+        }
+
+        return $source;
+    }
+
 }
