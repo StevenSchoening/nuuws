@@ -61,6 +61,10 @@ CREATE TABLE `crawleruri` (
 ALTER TABLE `crawleruri` ADD `interprete` INT(1) NOT NULL DEFAULT '0' AFTER `uri`;
 --
 
+--
+ALTER TABLE `crawleruri` CHANGE `interprete` `interpret` INT(1) NOT NULL DEFAULT '0';
+--
+
 -- --------------------------------------------------------
 
 --
