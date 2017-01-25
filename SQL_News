@@ -57,6 +57,10 @@ CREATE TABLE `crawleruri` (
   `uri` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+ALTER TABLE `crawleruri` ADD `interprete` INT(1) NOT NULL DEFAULT '0' AFTER `uri`;
+--
+
 -- --------------------------------------------------------
 
 --
