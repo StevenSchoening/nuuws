@@ -15,8 +15,8 @@ $srt = new ScriptRunTime;
 ini_set('max_execution_time', -1);
 
 Crawler::addToWhiteList([
-    '#^https?:\/\/\w+\.spiegel\.#i',
-    '#^https?:\/\/\w+\.sueddeutsche\.#i',
+    '#spiegel\.de#i',
+    '#sueddeutsche\.de#i',
 ]);
 
 #========================= start locations ========================
@@ -33,5 +33,9 @@ echo "<h2>Starte Crawling!</h2>";
 flush();ob_flush();flush();ob_flush();
 
 foreach($uris as $uri => &$crawler)
-
+{
     $crawler = new Crawler($uri);
+    $crawler->save();
+}
+
+Crawler::cleanDatabase();

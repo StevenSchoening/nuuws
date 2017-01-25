@@ -36,3 +36,4 @@ spl_autoload_register(function ($class)         # gets called if a class is used
 # Database
 
 $db = new Database;
+$db->select_db("nuuws");

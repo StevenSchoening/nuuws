@@ -5,17 +5,16 @@
  * User: Marvin
  * Date: 12/15/2016
  * Time: 12:37 PM
- * todo robots.txt
  */
 class Crawler
 {
+    private        $tableName     = "`crawleruri`";
+
     private        $results       = [];
 
     private static $whiteList     = [],     # Pattern collection about white listed domains/pages
                    $requestedUris = [],     # Uris that were already crawled
                    $debugMode     = TRUE;   # echo progress
-
-
 
     /**
      * Crawler constructor.
@@ -27,7 +26,7 @@ class Crawler
     {
         $this->results[] = $uri;
 
-        $counter         = 0;
+        $counter = 0;
 
         if(!self::robotsAllowed($uri))
 
@@ -41,7 +40,10 @@ class Crawler
 
                 echo "<p>Loop #$counter</p>";
 
-                flush();ob_flush();flush();ob_flush();
+                flush();
+                ob_flush();
+                flush();
+                ob_flush();
             }
 
             $this->results = $this->crawl($this->results);
@@ -64,7 +66,7 @@ class Crawler
         // if there isn't a robots, then we're allowed in
         if(empty($robotsTxt))
 
-            return true;
+            return TRUE;
 
         $rules       = [];
         $ruleApplies = FALSE;
@@ -81,7 +83,7 @@ class Crawler
                 // an empty rule implies full access - no further tests required
                 if(!$regs[1])
 
-                    return true;
+                    return TRUE;
 
                 // add rules that apply to array for testing
                 $rules[] = preg_quote(trim($regs[1]), '/');
@@ -93,10 +95,10 @@ class Crawler
             // check if page is disallowed to us
             if(preg_match("/^$rule/", $parsed['path']))
 
-                return false;
+                return FALSE;
 
         // page is not disallowed
-        return true;
+        return TRUE;
     }
 
     /**
@@ -141,7 +143,7 @@ class Crawler
 
         preg_match_all($aTagPat, $content, $hrefs);
 
-        $result  = [];
+        $result = [];
 
         foreach($hrefs[0] as $href)
         {
@@ -215,21 +217,20 @@ class Crawler
 
     private function getInsertQuery()
     {
-        $query = 'INSERT INTO TABLE_NAME (`id`, `uri`, `ts`) VALUES ';
+        $query = "INSERT INTO {$this->tableName} (`id`, `uri`, `createdTS`) VALUES ";
 
         foreach($this->results as $result)
 
-            if(!in_array($result, self::$requestedUris))
-
-                $query .= "(NULL, '$result', NULL), ";
+            $query .= "(NULL, '$result', NULL), ";
 
         return substr($query, 0, -2);
     }
 
-    function __destruct()
+    public function save()
     {
-//        Debugger::dump($this->results);
-        Debugger::dump($this->getInsertQuery());
+        if(!preg_match("#VALUE?$#", $query = $this->getInsertQuery())) # only execute complete query's
+
+            Database::getLastInstance()->query($query);
     }
 
     private function getSource($uri)
@@ -241,10 +242,38 @@ class Crawler
         {
             echo "<p>{$sw->getTime()}: $uri</p>";
 
-            flush(); ob_flush(); flush(); ob_flush();
+            flush();
+            ob_flush();
+            flush();
+            ob_flush();
         }
 
         return $source;
+    }
+
+    public static function cleanDatabase()
+    {
+        $sw     = new Stopwatch;
+
+        $db     = Database::getLastInstance();
+
+        $query  = "SELECT COUNT(uri) as result, uri FROM crawleruri GROUP BY uri";
+
+        $result = $db->query($query);
+
+        if($db->mysqli_num_rows($result))
+
+            while($row = $db->fetch_object($result))
+
+                if($row->result != "1")
+                {
+                    $query = "DELETE FROM `crawleruri` WHERE `id` IN (
+                              SELECT `id` FROM `crawleruri` WHERE `uri` LIKE '$row->uri' ORDER BY createdTS DESC)";
+
+                    $db->query($query);
+                }
+
+        echo "<p>Zeit: {$sw->getTime()}</p>";
     }
 
 }
