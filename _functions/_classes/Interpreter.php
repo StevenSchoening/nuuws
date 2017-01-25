@@ -10,8 +10,8 @@ abstract class Interpreter
 {
     private $uri, $title, $content, $headerImage, $headerImageInfo, $author, $publisher;
 
-    public function __construct()
+    public function __construct($uri)
     {
-
+        $this->uri = $uri;
     }
 }

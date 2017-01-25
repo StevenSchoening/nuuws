@@ -217,11 +217,11 @@ class Crawler
 
     private function getInsertQuery()
     {
-        $query = "INSERT INTO {$this->tableName} (`id`, `uri`, `createdTS`) VALUES ";
+        $query = "INSERT INTO {$this->tableName} (`id`, `uri`, `createdTS`, `interpreted`) VALUES ";
 
         foreach($this->results as $result)
 
-            $query .= "(NULL, '$result', NULL), ";
+            $query .= "(NULL, '$result', NULL, NULL), ";
 
         return substr($query, 0, -2);
     }
@@ -262,23 +262,6 @@ class Crawler
                   ) duplic on duplic.uri = crawleruri.uri where crawleruri.id < duplic.lastId;";
 
         $db->query($query);
-
-        $query  = "SELECT COUNT(uri) as result, uri FROM crawleruri GROUP BY uri";
-
-        $result = $db->query($query);
-
-        if($db->mysqli_num_rows($result))
-
-            while($row = $db->fetch_object($result))
-
-                if($row->result != "1")
-                {
-                    Debugger::dump($row);
-                }
-//
-//        echo "<p>Zeit: {$sw->getTime()}</p>";
-
-
     }
 
 }
