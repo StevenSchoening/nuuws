@@ -263,21 +263,18 @@ class Crawler
 
         $db->query($query);
 
-//        $query  = "SELECT COUNT(uri) as result, uri FROM crawleruri GROUP BY uri";
-//
-//        $result = $db->query($query);
-//
-//        if($db->mysqli_num_rows($result))
-//
-//            while($row = $db->fetch_object($result))
-//
-//                if($row->result != "1")
-//                {
-//                    $query = "DELETE FROM `crawleruri` WHERE `id` IN (
-//                              SELECT `id` FROM `crawleruri` WHERE `uri` LIKE '$row->uri' ORDER BY createdTS DESC)";
-//
-//                    $db->query($query);
-//                }
+        $query  = "SELECT COUNT(uri) as result, uri FROM crawleruri GROUP BY uri";
+
+        $result = $db->query($query);
+
+        if($db->mysqli_num_rows($result))
+
+            while($row = $db->fetch_object($result))
+
+                if($row->result != "1")
+                {
+                    Debugger::dump($row);
+                }
 //
 //        echo "<p>Zeit: {$sw->getTime()}</p>";
 
