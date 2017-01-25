@@ -253,27 +253,35 @@ class Crawler
 
     public static function cleanDatabase()
     {
-        $sw     = new Stopwatch;
+        $sw    = new Stopwatch;
 
-        $db     = Database::getLastInstance();
+        $db    = Database::getLastInstance();
 
-        $query  = "SELECT COUNT(uri) as result, uri FROM crawleruri GROUP BY uri";
+        $query = "delete crawleruri from `crawleruri` inner join (
+                    SELECT max(id) as lastId, uri from `crawleruri` group by uri having count(*) > 1
+                  ) duplic on duplic.uri = crawleruri.uri where crawleruri.id < duplic.lastId;";
 
-        $result = $db->query($query);
+        $db->query($query);
 
-        if($db->mysqli_num_rows($result))
+//        $query  = "SELECT COUNT(uri) as result, uri FROM crawleruri GROUP BY uri";
+//
+//        $result = $db->query($query);
+//
+//        if($db->mysqli_num_rows($result))
+//
+//            while($row = $db->fetch_object($result))
+//
+//                if($row->result != "1")
+//                {
+//                    $query = "DELETE FROM `crawleruri` WHERE `id` IN (
+//                              SELECT `id` FROM `crawleruri` WHERE `uri` LIKE '$row->uri' ORDER BY createdTS DESC)";
+//
+//                    $db->query($query);
+//                }
+//
+//        echo "<p>Zeit: {$sw->getTime()}</p>";
 
-            while($row = $db->fetch_object($result))
 
-                if($row->result != "1")
-                {
-                    $query = "DELETE FROM `crawleruri` WHERE `id` IN (
-                              SELECT `id` FROM `crawleruri` WHERE `uri` LIKE '$row->uri' ORDER BY createdTS DESC)";
-
-                    $db->query($query);
-                }
-
-        echo "<p>Zeit: {$sw->getTime()}</p>";
     }
 
 }
