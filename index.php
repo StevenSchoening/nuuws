@@ -7,6 +7,9 @@
  */
 
 require_once '_functions/_init.php';
-$ttest = '<br>Test';
+
+$test = '<br>Test';
+
 $smarty->display('portal/frontend/templates/index.tpl');
+
 ?>

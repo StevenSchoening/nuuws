@@ -24,16 +24,17 @@ $smarty = new Smarty;
 
 spl_autoload_register(function ($class)         # gets called if a class is used but not defined
 {
+
     @include "_classes/$class.php";
     @include "_classes/interfaces/$class.php";
     @include "_classes/traits/$class.php";
 
+    #create log
     $log = new Log("classInclude");
-
     $log->append("loading: $class");
+
+    #load database
+    $db = new Database;
+    $db->select_db("nuuws");
 });
-
-# Database
-
-$db = new Database;
-$db->select_db("nuuws");
+?>

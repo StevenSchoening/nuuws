@@ -23,6 +23,11 @@ header > nav ul{
     height: 30%;
     position: absolute;
 }
+article{
+    position: absolute;
+    left: 35%;
+    top: 50%;
+}
 .navigation_list li{
     font-size:20px;
     color:#fff;
