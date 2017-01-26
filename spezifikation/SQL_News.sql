@@ -154,8 +154,8 @@ DROP TABLE `tagsinnews`;
 
 --
 CREATE TABLE `nuuws`.`tagsinnews` ( 
-    `news` INT(10) NOT NULL AUTO_INCREMENT , 
-    `tags` INT(10) NOT NULL AUTO_INCREMENT , 
+    `news` INT(10) NOT NULL , 
+    `tags` INT(10) NOT NULL , 
   PRIMARY KEY (`news`, `tags`)
 ) ENGINE = InnoDB;
 --
