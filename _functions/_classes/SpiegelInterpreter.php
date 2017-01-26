@@ -11,5 +11,16 @@ class SpiegelInterpreter extends Interpreter
     public function __construct($uri, $id)
     {
         parent::__construct($uri, $id);
+        self::detectTitle();
+    }
+
+    private function detectTitle()
+    {
+        exit("$this->html");
+    }
+
+    public function getInsetQuery()
+    {
+        return "spiegel";
     }
 }
