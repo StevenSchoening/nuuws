@@ -221,7 +221,7 @@ class Crawler
 
         foreach($this->results as $result)
 
-            $query .= "(NULL, '$result', NULL, NULL), ";
+            $query .= "(NULL, NULL, '$result', NULL), ";
 
         return substr($query, 0, -2);
     }
@@ -231,6 +231,8 @@ class Crawler
         if(!preg_match("#VALUE?$#", $query = $this->getInsertQuery())) # only execute complete query's
 
             Database::getLastInstance()->query($query);
+
+//        Debugger::dump($this->getInsertQuery());die;
     }
 
     private function getSource($uri)
@@ -258,8 +260,8 @@ class Crawler
         $db    = Database::getLastInstance();
 
         $query = "delete crawleruri from `crawleruri` inner join (
-                    SELECT max(id) as lastId, uri from `crawleruri` group by uri having count(*) > 1
-                  ) duplic on duplic.uri = crawleruri.uri where crawleruri.id < duplic.lastId;";
+                    SELECT max(uriID) as lastId, uri from `crawleruri` group by uri having count(*) > 1
+                  ) duplic on duplic.uri = crawleruri.uri where crawleruri.uriID < duplic.lastId;";
 
         $db->query($query);
     }
