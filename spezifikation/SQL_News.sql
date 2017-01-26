@@ -65,6 +65,10 @@ ALTER TABLE `crawleruri` ADD `interprete` INT(1) NOT NULL DEFAULT '0' AFTER `uri
 ALTER TABLE `crawleruri` CHANGE `interprete` `interpret` INT(1) NOT NULL DEFAULT '0';
 --
 
+--
+ALTER TABLE `crawleruri` CHANGE `interpret` `interpreted` INT(1) NOT NULL DEFAULT '0';
+--
+
 -- --------------------------------------------------------
 
 --
@@ -113,6 +117,10 @@ CREATE TABLE `tags` (
   `tagsIn` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+ALTER TABLE `tags` DROP `tagsIn`;
+--
+
 -- --------------------------------------------------------
 
 --
@@ -125,6 +133,10 @@ CREATE TABLE `tagsin` (
   `News` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+DROP TABLE `tagsin`;
+--
+
 -- --------------------------------------------------------
 
 --
@@ -136,6 +148,17 @@ CREATE TABLE `tagsinnews` (
   `tagsInID` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+DROP TABLE `tagsinnews`;
+--
+
+--
+CREATE TABLE `nuuws`.`tagsinnews` ( 
+    `news` INT(10) NOT NULL AUTO_INCREMENT , 
+    `tags` INT(10) NOT NULL AUTO_INCREMENT , 
+  PRIMARY KEY (`news`, `tags`)
+) ENGINE = InnoDB;
+--
 -- --------------------------------------------------------
 
 --
