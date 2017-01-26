@@ -217,7 +217,7 @@ class Crawler
 
     private function getInsertQuery()
     {
-        $query = "INSERT INTO {$this->tableName} (`id`, `uri`, `createdTS`, `interpreted`) VALUES ";
+        $query = "INSERT INTO {$this->tableName} (`uriID`, `createdTS`, `uri`, `interpreted`) VALUES ";
 
         foreach($this->results as $result)
 
