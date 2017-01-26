@@ -1,7 +1,6 @@
 <html>
 <head>
     <link rel="stylesheet" href="portal/assets/styles/style.css" type="text/css">
-    <link rel="stylesheet" href="portal/assets/scripts/article.js" type="text/css">
 </head>
 <body>
 <header>
