@@ -11,12 +11,21 @@ class SpiegelInterpreter extends Interpreter
     public function __construct($uri, $id)
     {
         parent::__construct($uri, $id);
+
+
         self::detectTitle();
     }
 
+
+
+
+
     private function detectTitle()
     {
-        exit("$this->html");
+        $pattern = '/<title [^>]* > ([^<]*) <\/title>/ix';
+        preg_match_all($pattern, $this->html, $matches);
+
+        Debugger::dump($matches);
     }
 
     public function getInsetQuery()

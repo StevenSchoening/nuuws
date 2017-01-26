@@ -8,15 +8,16 @@
  */
 abstract class Interpreter implements IInterpreter
 {
-    protected $uri, $id, $title, $content, $headerImage, $headerImageInfo, $author, $publisher, $html;
+    protected $uri, $id, $title, $content, $headerImage, $headerImageInfo, $author, $publisher, $html, $isArticle;
 
     const table = "`article`";
 
     public function __construct($uri, $id)
     {
-        $this->uri  = $uri;
-        $this->id   = $id;
-        $this->html = file_get_contents($uri);
+        $this->isArticle = FALSE;
+        $this->uri       = $uri;
+        $this->id        = $id;
+        $this->html      = file_get_contents($uri);
     }
 
     public static function getPublisher($uri)
