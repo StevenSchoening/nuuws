@@ -9,4 +9,5 @@
 interface IInterpreter
 {
     public function getInsetQuery();
+    public function isArticle();
 }

@@ -18,6 +18,7 @@ abstract class Interpreter implements IInterpreter
         $this->uri       = $uri;
         $this->id        = $id;
         $this->html      = file_get_contents($uri);
+        $this->isArticle = $this->isArticle();
     }
 
     public static function getPublisher($uri)
@@ -32,6 +33,9 @@ abstract class Interpreter implements IInterpreter
 
     public function __destruct()
     {
+
+//      todo update Uri entry
+//      todo insert
         Debugger::dump($this->getInsetQuery());
     }
 }

@@ -12,8 +12,10 @@ class SpiegelInterpreter extends Interpreter
     {
         parent::__construct($uri, $id);
 
-
-        self::detectTitle();
+        if($this->isArticle)
+        {
+            self::detectTitle();
+        }
     }
 
 
@@ -25,11 +27,18 @@ class SpiegelInterpreter extends Interpreter
         $pattern = '/<title [^>]* > ([^<]*) <\/title>/ix';
         preg_match_all($pattern, $this->html, $matches);
 
-        Debugger::dump($matches);
+        $pattern = '/^[^:]+:[^\-]+/ix';
+
+        Debugger::dump($matches);die;
     }
 
     public function getInsetQuery()
     {
         return "spiegel";
+    }
+
+    public function isArticle()
+    {
+        return preg_match('#\\d+\\.html#i', $this->uri);
     }
 }
