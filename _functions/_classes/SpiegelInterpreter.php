@@ -66,18 +66,24 @@ class SpiegelInterpreter extends Interpreter
 
 //      Header Image
 
-        if(sizeof($image = $html->find('asset-maxi')[0]->find('a')) !== 0)
+        if(sizeof($image = $html->find('.image-buttons-panel')) !== 0)
         {
-            echo $image->innertext;
+            $this->headerImage = $image[0]->find('a')[0]->innertext;
+
+//          Header Image info
+
+            preg_match_all('((width|height)="(\d+)")', $this->headerImage, $imgInfo);
+
+            foreach($imgInfo[1] as $i => $property)
+
+                $this->headerImageInfo[$property] = $imgInfo[2][$i];
+
+            Debugger::dump($this->headerImageInfo);
         }
 
-
-
-
-        echo "$this->summary<br />$this->content";
+        echo "$this->headerImage<br>$this->summary<br />$this->content";
 
         die;
-
     }
 
     public function getInsertQuery()

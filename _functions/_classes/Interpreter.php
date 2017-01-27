@@ -16,11 +16,12 @@ abstract class Interpreter implements IInterpreter
 
     public function __construct($uri, $id)
     {
-        $this->isArticle = FALSE;
-        $this->uri       = $uri;
-        $this->id        = $id;
-        $this->html      = file_get_contents($uri);
-        $this->isArticle = $this->isArticle();
+        $this->isArticle       = FALSE;
+        $this->uri             = $uri;
+        $this->id              = $id;
+        $this->html            = file_get_contents($uri);
+        $this->isArticle       = $this->isArticle();
+        $this->headerImageInfo = [];
     }
 
     public static function getPublisher($uri)
