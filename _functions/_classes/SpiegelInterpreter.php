@@ -41,20 +41,26 @@ class SpiegelInterpreter extends Interpreter
     {
         $html = str_get_html($this->html);
 
-//        foreach($html->find('ul') as $ul)
-//
-//            foreach($ul->find('li') as $li)
-//
-//                Debugger::dump($li);
+        if(sizeof($articles = $html->find('.article-section'))  === 0
+        || sizeof($summary  = $html->find('.article-intro'))    === 0)
 
-//        $content = $html->find('.article-section');
-//        Debugger::dump($content->innertext);
+            return $this->isArticle = false;
 
-        foreach($html->find('.article-section') as $article)
+        echo "<p>$this->uri</p>";
+
+//      Summary content
+
+        $this->summary = $summary[0]->innertext;
+
+//      Full content
+
+        foreach($articles as $article)
 
             foreach($article->find('p') as $p)
 
-                Debugger::dump($p->innertext);
+                $this->content .= $p;
+
+        echo "$this->summary<br />$this->content";
 
         die;
 
