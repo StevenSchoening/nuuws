@@ -105,9 +105,12 @@ class SpiegelInterpreter extends Interpreter
 
     public function getInsertQuery()
     {
+        $escapedTitle   = Database::getLastInstance()->real_escape($this->title);
+        $escapedContent = Database::getLastInstance()->real_escape($this->content);
+
         return "INSERT INTO `news`(`newsID`, `title`, `content`, `createdTS`, `userID`, `published`, `crawlerURI`) 
                 VALUES (
-                NULL, '$this->title', '$this->content', NULL, '0', '1', '$this->uri');";
+                NULL, '$escapedTitle', '$escapedContent', NULL, '0', '1', '$this->uri');";
     }
 
     public function isArticle()
