@@ -109,7 +109,9 @@ class SpiegelInterpreter extends Interpreter
 
     public function getInsertQuery()
     {
-        return "spiegel";
+        return "INSERT INTO `news`(`newsID`, `title`, `content`, `createdTS`, `userID`, `published`, `crawlerURI`) 
+                VALUES (
+                NULL, '$this->title', '$this->content', NULL, '0', '1', '$this->uri');";
     }
 
     public function isArticle()

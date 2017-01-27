@@ -16,7 +16,7 @@ ini_set('max_execution_time', -1);
 
 Crawler::addToWhiteList([
     '#spiegel\.de#i',
-    '#sueddeutsche\.de#i',
+//    '#sueddeutsche\.de#i',
 ]);
 
 #========================= start locations ========================

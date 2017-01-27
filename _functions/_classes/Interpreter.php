@@ -5,6 +5,7 @@
  * User: Marvin
  * Date: 1/25/2017
  * Time: 9:27 AM
+ * todo link in content???
  */
 abstract class Interpreter implements IInterpreter
 {
@@ -42,12 +43,11 @@ abstract class Interpreter implements IInterpreter
 
     public function __destruct()
     {
-        if(!$this->isArticle)
+        if(!$this->isArticle) // todo remove
 
             Database::getLastInstance()->query($this->getUpdateUriQuery());
 
-//      todo insert
-//        Debugger::dump($this->getInsetQuery());
+        Debugger::dump($this->getInsertQuery());
     }
 
     public static function trimTitle($title)
