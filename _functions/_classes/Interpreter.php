@@ -43,11 +43,13 @@ abstract class Interpreter implements IInterpreter
 
     public function __destruct()
     {
-        if(!$this->isArticle) // todo remove
+//        if(!$this->isArticle) // todo remove
 
             Database::getLastInstance()->query($this->getUpdateUriQuery());
 
-        Debugger::dump($this->getInsertQuery());
+        if($this->isArticle)
+
+            Database::getLastInstance()->query($this->getInsertQuery());
     }
 
     public static function trimTitle($title)

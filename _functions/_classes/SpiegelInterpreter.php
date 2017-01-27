@@ -47,8 +47,10 @@ class SpiegelInterpreter extends Interpreter
 
         if(sizeof($articles = $html->find('.article-section'))  === 0
         || sizeof($summary  = $html->find('.article-intro'))    === 0)
-
-            return $this->isArticle = false;
+        {
+            $this->isArticle = FALSE;
+            return;
+        }
 
         echo "<p>$this->uri</p>";       // todo entfernen
 
@@ -99,12 +101,6 @@ class SpiegelInterpreter extends Interpreter
 
                 $this->tags[] = trim(str_replace('&gt;', '', strip_tags($li[$i]->innertext)));
         }
-
-        Debugger::dump($this->tags);
-
-        echo "{$this->headerImageInfo['orgHtml']}<br>$this->summary<br />$this->content";
-
-        die;
     }
 
     public function getInsertQuery()

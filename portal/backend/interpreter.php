@@ -8,6 +8,8 @@
 
 require '../../_functions/_init.php';
 
+error_reporting(0);
+
 $srt = new ScriptRunTime;
 
 ini_set('max_execution_time', -1);
@@ -17,8 +19,6 @@ ini_set('max_execution_time', -1);
 $query = "SELECT * FROM `crawleruri` WHERE `interpreted` LIKE 0 ORDER BY createdTS DESC LIMIT 25";
 
 $result = $db->query($query);
-
-$i = 0;
 
 if($db->mysqli_num_rows($result))
 
@@ -40,8 +40,6 @@ if($db->mysqli_num_rows($result))
 
                 break;
         }
-
-        echo "<p>".$i++."</p>";
 
         flush();ob_flush();flush();ob_flush();
     }
