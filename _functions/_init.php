@@ -6,13 +6,13 @@
  * Time: 10:53 AM
  */
 
-error_reporting(0);
+//error_reporting(0);
 
 session_start();
 
-ini_set("max_execution_time", 180);
+ini_set("max_execution_time", -1);
 
-define("LOGDEFAULTPATH", 'c://xampp/htdocs/nuuws/logs');
+define("LOGDEFAULTPATH", realpath("logs"));
 
 # Smarty
 

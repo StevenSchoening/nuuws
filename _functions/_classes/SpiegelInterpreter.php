@@ -19,10 +19,6 @@ class SpiegelInterpreter extends Interpreter
         }
     }
 
-
-
-
-
     private function detectTitle()
     {
         $pattern = '/<title [^>]* > ([^<]*) <\/title>/ix';
