@@ -16,6 +16,10 @@ class SpiegelInterpreter extends Interpreter
         {
             self::detectTitle();
             self::detectContent();
+
+            if(!$this->isArticle())
+
+                return;
         }
     }
 
@@ -46,7 +50,7 @@ class SpiegelInterpreter extends Interpreter
 
             return $this->isArticle = false;
 
-        echo "<p>$this->uri</p>";
+        echo "<p>$this->uri</p>";       // todo entfernen
 
 //      Summary content
 
@@ -59,6 +63,16 @@ class SpiegelInterpreter extends Interpreter
             foreach($article->find('p') as $p)
 
                 $this->content .= $p;
+
+//      Header Image
+
+        if(sizeof($image = $html->find('asset-maxi')[0]->find('a')) !== 0)
+        {
+            echo $image->innertext;
+        }
+
+
+
 
         echo "$this->summary<br />$this->content";
 
