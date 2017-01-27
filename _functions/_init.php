@@ -12,7 +12,7 @@ session_start();
 
 ini_set("max_execution_time", 180);
 
-define("LOGDEFAULTPATH", 'c://xampp/htdocs/logs/');
+define("LOGDEFAULTPATH", 'c://xampp/htdocs/nuuws/logs');
 
 # Smarty
 
@@ -20,11 +20,14 @@ require_once 'plugins/smarty-3.1.30/libs/Smarty.class.php';
 
 $smarty = new Smarty;
 
+# DOM Interpreter
+
+require_once 'plugins/htmlparser/simple_html_dom.php';
+
 # Autoload function
 
 spl_autoload_register(function ($class)         # gets called if a class is used but not defined
 {
-
     @include "_classes/$class.php";
     @include "_classes/interfaces/$class.php";
     @include "_classes/traits/$class.php";
@@ -32,9 +35,8 @@ spl_autoload_register(function ($class)         # gets called if a class is used
     #create log
     $log = new Log("classInclude");
     $log->append("loading: $class");
-
-    #load database
-    $db = new Database;
-    $db->select_db("nuuws");
 });
-?>
+
+#load database
+$db = new Database;
+$db->select_db("nuuws");
