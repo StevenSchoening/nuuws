@@ -15,6 +15,7 @@ class SpiegelInterpreter extends Interpreter
         if($this->isArticle)
         {
             self::detectTitle();
+            self::detectContent();
         }
     }
 
@@ -27,18 +28,55 @@ class SpiegelInterpreter extends Interpreter
         $pattern = '/<title [^>]* > ([^<]*) <\/title>/ix';
         preg_match_all($pattern, $this->html, $matches);
 
-        $pattern = '/^[^:]+:[^\-]+/ix';
+        $titleTag = $matches[1][0];
 
-        Debugger::dump($matches);die;
+        $titleArray = explode("SPIEGEL", $titleTag);
+
+        if(sizeof($titleArray) == 4)
+
+            $this->title = self::trimTitle($titleArray[1]);
+
+        else
+
+            $this->title = self::trimTitle($titleArray[0]);
     }
 
-    public function getInsetQuery()
+    private function detectContent()
+    {
+        $html = str_get_html($this->html);
+
+//        foreach($html->find('ul') as $ul)
+//
+//            foreach($ul->find('li') as $li)
+//
+//                Debugger::dump($li);
+
+//        $content = $html->find('.article-section');
+//        Debugger::dump($content->innertext);
+
+        foreach($html->find('.article-section') as $article)
+
+            foreach($article->find('p') as $p)
+
+                Debugger::dump($p->innertext);
+
+        die;
+
+    }
+
+    public function getInsertQuery()
     {
         return "spiegel";
     }
 
     public function isArticle()
     {
-        return preg_match('#\\d+\\.html#i', $this->uri);
+        if(preg_match('#\\d+\\.html#i', $this->uri))
+
+            return !strpos($this->uri, "spiegeltv");
+
+        else
+
+            return FALSE;
     }
 }

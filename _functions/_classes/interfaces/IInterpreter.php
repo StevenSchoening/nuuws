@@ -8,6 +8,6 @@
  */
 interface IInterpreter
 {
-    public function getInsetQuery();
+    public function getInsertQuery();
     public function isArticle();
 }

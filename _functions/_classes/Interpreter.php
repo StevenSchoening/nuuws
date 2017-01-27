@@ -10,7 +10,9 @@ abstract class Interpreter implements IInterpreter
 {
     protected $uri, $id, $title, $content, $headerImage, $headerImageInfo, $author, $publisher, $html, $isArticle;
 
-    const table = "`article`";
+    const newsTable = "`article`";
+
+    const uriTable  = "`crawleruri`";
 
     public function __construct($uri, $id)
     {
@@ -18,7 +20,8 @@ abstract class Interpreter implements IInterpreter
         $this->uri       = $uri;
         $this->id        = $id;
         $this->html      = file_get_contents($uri);
-        $this->isArticle = $this->isArticle();
+//        $this->isArticle = $this->isArticle();
+        Debugger::dump([$this->isArticle = $this->isArticle(), $uri]);
     }
 
     public static function getPublisher($uri)
@@ -31,11 +34,32 @@ abstract class Interpreter implements IInterpreter
         return strtolower($host[sizeof($host) - 2]); // -1 = top level domain, -2 = domain
     }
 
+    private function getUpdateUriQuery()
+    {
+        return "UPDATE `crawleruri` SET `interpreted` = '1' WHERE `uriID` LIKE '{$this->id}'";
+    }
+
     public function __destruct()
     {
+        if(!$this->isArticle)
 
-//      todo update Uri entry
+            Database::getLastInstance()->query($this->getUpdateUriQuery());
+
 //      todo insert
-        Debugger::dump($this->getInsetQuery());
+//        Debugger::dump($this->getInsetQuery());
+    }
+
+    public static function trimTitle($title)
+    {
+        $search  = [
+            '#^[^\w]+#ix',
+            '#(\w)[^\w]+$#ix'
+        ];
+        $replace = [
+            '',
+            '$1'
+        ];
+
+        return preg_replace($search, $replace, trim($title));
     }
 }
