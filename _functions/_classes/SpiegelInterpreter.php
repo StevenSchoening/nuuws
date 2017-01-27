@@ -72,16 +72,37 @@ class SpiegelInterpreter extends Interpreter
 
 //          Header Image info
 
-            preg_match_all('((width|height)="(\d+)")', $this->headerImage, $imgInfo);
+            preg_match_all('#((width|height)="(\d+)")#i', $this->headerImage, $imgInfo);
 
             foreach($imgInfo[1] as $i => $property)
 
                 $this->headerImageInfo[$property] = $imgInfo[2][$i];
 
-            Debugger::dump($this->headerImageInfo);
+            preg_match('#(title)="([\d\w\s\-:&;]+)"#i', $this->headerImage, $title);
+
+            $this->headerImageInfo['title'] = $title[2];
+
+            preg_match('#(src)="([\d\w\s\-:&;\/\.]+)"#i', $this->headerImage, $src);
+
+            $this->headerImageInfo['orgHtml'] = $this->headerImage;
+
+            $this->headerImage                = $src[2];
         }
 
-        echo "$this->headerImage<br>$this->summary<br />$this->content";
+//      Category
+
+        if(sizeof($breadcrumb = $html->find('.breadcrumb-history')) !== 0)
+        {
+            $li = $breadcrumb[0]->find('li');
+
+            for($i = 1; $i < sizeof($li) - 1; $i++)
+
+                $this->tags[] = trim(str_replace('&gt;', '', strip_tags($li[$i]->innertext)));
+        }
+
+        Debugger::dump($this->tags);
+
+        echo "{$this->headerImageInfo['orgHtml']}<br>$this->summary<br />$this->content";
 
         die;
     }

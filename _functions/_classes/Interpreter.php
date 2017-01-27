@@ -8,7 +8,8 @@
  */
 abstract class Interpreter implements IInterpreter
 {
-    protected $uri, $id, $title, $content, $headerImage, $headerImageInfo, $author, $publisher, $html, $isArticle, $summary;
+    protected $uri, $id, $title, $content, $headerImage, $headerImageInfo,
+              $author, $publisher, $html, $isArticle, $summary, $tags;
 
     const newsTable = "`article`";
 
@@ -21,7 +22,7 @@ abstract class Interpreter implements IInterpreter
         $this->id              = $id;
         $this->html            = file_get_contents($uri);
         $this->isArticle       = $this->isArticle();
-        $this->headerImageInfo = [];
+        $this->headerImageInfo = $this->tags = [];
     }
 
     public static function getPublisher($uri)
