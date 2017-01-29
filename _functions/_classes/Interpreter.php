@@ -44,9 +44,7 @@ abstract class Interpreter implements IInterpreter
 
     public function __destruct()
     {
-//        if(!$this->isArticle) // todo remove
-
-            Database::getLastInstance()->query($this->getUpdateUriQuery());
+        Database::getLastInstance()->query($this->getUpdateUriQuery());
 
         if($this->isArticle)
 
