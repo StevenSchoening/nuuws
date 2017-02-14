@@ -26,6 +26,11 @@ $uris = [
 //    'http://spiegel.de' => NULL,
 ];
 
+#========================== RESET & TRUNCATE ============================== todo remove!
+
+Database::getLastInstance()->query("TRUNCATE TABLE `crawleruri`");
+Database::getLastInstance()->query("TRUNCATE TABLE `news`");
+
 #========================== crawling ==============================
 
 echo "<h2>Starte Crawling!</h2>";

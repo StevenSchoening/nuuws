@@ -66,30 +66,7 @@ class SpiegelInterpreter extends Interpreter
 
                 $this->content .= $p;
 
-//      Header Image
-
-        if(sizeof($image = $html->find('.image-buttons-panel')) !== 0)
-        {
-            $this->headerImage = $image[0]->find('a')[0]->innertext;
-
-//          Header Image info
-
-            preg_match_all('#((width|height)="(\d+)")#i', $this->headerImage, $imgInfo);
-
-            foreach($imgInfo[1] as $i => $property)
-
-                $this->headerImageInfo[$property] = $imgInfo[2][$i];
-
-            preg_match('#(title)="([\d\w\s\-:&;]+)"#i', $this->headerImage, $title);
-
-            $this->headerImageInfo['title'] = $title[2];
-
-            preg_match('#(src)="([\d\w\s\-:&;\/\.]+)"#i', $this->headerImage, $src);
-
-            $this->headerImageInfo['orgHtml'] = $this->headerImage;
-
-            $this->headerImage                = $src[2];
-        }
+        self::detectImages($html);
 
 //      Category
 
@@ -103,10 +80,43 @@ class SpiegelInterpreter extends Interpreter
         }
     }
 
+    private function detectImages($html)
+    {
+//      Header Image
+
+        if(sizeof($image = $html->find('.image-buttons-panel')) !== 0);
+
+        else if(sizeof($image = $html->find('.spPanoImageTeaserPic')) !== 0);
+
+        else return;
+
+        $this->headerImage = $image[0]->find('a')[0]->innertext;
+
+//      Header Image info
+
+        preg_match_all('#((width|height)="(\d+)")#i', $this->headerImage, $imgInfo);
+
+        foreach($imgInfo[1] as $i => $property)
+
+            $this->headerImageInfo[$property] = $imgInfo[2][$i];
+
+        preg_match('#(title)="([\d\w\s\-:&;]+)"#i', $this->headerImage, $title);
+
+        $this->headerImageInfo['title'] = $title[2];
+
+        preg_match('#(src)="([\d\w\s\-:&;\/\.]+)"#i', $this->headerImage, $src);
+
+        $this->headerImageInfo['orgHtml'] = $this->headerImage;
+
+        $this->headerImage                = $src[2];
+    }
+
     public function getInsertQuery()
     {
         $escapedTitle   = Database::getLastInstance()->real_escape($this->title);
         $escapedContent = Database::getLastInstance()->real_escape($this->content);
+
+        Debugger::dump([$this->headerImage, $this->headerImageInfo, $this->tags]);
 
         return "INSERT INTO `news`(`newsID`, `title`, `content`, `createdTS`, `userID`, `published`, `crawlerURI`) 
                 VALUES (
@@ -115,7 +125,6 @@ class SpiegelInterpreter extends Interpreter
 
     public function isArticle()
     {
-//        return preg_match('#\\d+\\.html#i', $this->uri) ? !strpos($this->uri, "spiegeltv") : FALSE;
         if(preg_match('#\\d+\\.html#i', $this->uri))
 
             return !strpos($this->uri, "spiegeltv") && !strpos($this->uri, "extras");
