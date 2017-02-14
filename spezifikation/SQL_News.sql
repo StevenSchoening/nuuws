@@ -3,12 +3,18 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 25. Jan 2017 um 09:03
+-- Erstellungszeit: 14. Feb 2017 um 09:12
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Datenbank: `nuuws`
@@ -54,20 +60,24 @@ INSERT INTO `categorynews` (`category`, `news`) VALUES
 CREATE TABLE `crawleruri` (
   `uriID` int(10) NOT NULL,
   `createdTS` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `uri` varchar(200) NOT NULL
+  `uri` varchar(200) NOT NULL,
+  `interpreted` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
-ALTER TABLE `crawleruri` ADD `interprete` INT(1) NOT NULL DEFAULT '0' AFTER `uri`;
---
+-- --------------------------------------------------------
 
 --
-ALTER TABLE `crawleruri` CHANGE `interprete` `interpret` INT(1) NOT NULL DEFAULT '0';
+-- Tabellenstruktur für Tabelle `images`
 --
 
---
-ALTER TABLE `crawleruri` CHANGE `interpret` `interpreted` INT(1) NOT NULL DEFAULT '0';
---
+CREATE TABLE `images` (
+  `imageID` int(10) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `description` text NOT NULL,
+  `copyright` varchar(100) NOT NULL,
+  `link` varchar(200) NOT NULL,
+  `imagePath` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -81,7 +91,7 @@ CREATE TABLE `news` (
   `content` text NOT NULL,
   `createdTS` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user` int(10) NOT NULL,
-  `published(Y/N)` varchar(1) NOT NULL,
+  `published` tinyint(1) NOT NULL,
   `crawlerURI` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -89,8 +99,8 @@ CREATE TABLE `news` (
 -- Daten für Tabelle `news`
 --
 
-INSERT INTO `news` (`newsID`, `title`, `content`, `createdTS`, `user`, `published(Y/N)`, `crawlerURI`) VALUES
-(1, 'cultural awareness', '', '2017-01-24 09:48:37', 345678, 'N', '');
+INSERT INTO `news` (`newsID`, `title`, `content`, `createdTS`, `user`, `published`, `crawlerURI`) VALUES
+(1, 'cultural awareness', '', '2017-01-24 09:48:37', 345678, 0, '');
 
 -- --------------------------------------------------------
 
@@ -113,29 +123,8 @@ CREATE TABLE `ranking` (
 
 CREATE TABLE `tags` (
   `tagsID` int(10) NOT NULL,
-  `tagsName` varchar(200) NOT NULL,
-  `tagsIn` int(10) NOT NULL
+  `tagsName` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
-ALTER TABLE `tags` DROP `tagsIn`;
---
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `tagsin`
---
-
-CREATE TABLE `tagsin` (
-  `tagsInID` int(10) NOT NULL,
-  `tagsInName` varchar(200) NOT NULL,
-  `News` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
-DROP TABLE `tagsin`;
---
 
 -- --------------------------------------------------------
 
@@ -144,21 +133,10 @@ DROP TABLE `tagsin`;
 --
 
 CREATE TABLE `tagsinnews` (
-  `newsID` int(10) NOT NULL,
-  `tagsInID` int(10) NOT NULL
+  `news` int(10) NOT NULL,
+  `tags` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
-DROP TABLE `tagsinnews`;
---
-
---
-CREATE TABLE `nuuws`.`tagsinnews` ( 
-    `news` INT(10) NOT NULL , 
-    `tags` INT(10) NOT NULL , 
-  PRIMARY KEY (`news`, `tags`)
-) ENGINE = InnoDB;
---
 -- --------------------------------------------------------
 
 --
@@ -167,6 +145,7 @@ CREATE TABLE `nuuws`.`tagsinnews` (
 
 CREATE TABLE `user` (
   `userID` int(10) NOT NULL,
+  `userName` varchar(32) NOT NULL,
   `password` varchar(250) NOT NULL,
   `fName` varchar(100) NOT NULL,
   `lName` varchar(100) NOT NULL,
@@ -177,17 +156,12 @@ CREATE TABLE `user` (
   `usergroup` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
---
-ALTER TABLE `user` ADD `userName` VARCHAR(32) NOT NULL AFTER `userID`;
---
-
 --
 -- Daten für Tabelle `user`
 --
 
-INSERT INTO `user` (`userID`, `password`, `fName`, `lName`, `birthDat`, `createdTS`, `email`, `ipAdress`, `usergroup`) VALUES
-(1, 'sdskdfkdsfkdsh4', 'nikja', 'mylvakanam', '0000-00-00', '2017-01-24 10:01:51', '', '', 0);
+INSERT INTO `user` (`userID`, `userName`, `password`, `fName`, `lName`, `birthDat`, `createdTS`, `email`, `ipAdress`, `usergroup`) VALUES
+(1, '', 'sdskdfkdsfkdsh4', 'nikja', 'mylvakanam', '0000-00-00', '2017-01-24 10:01:51', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -225,6 +199,12 @@ ALTER TABLE `crawleruri`
   ADD PRIMARY KEY (`uriID`);
 
 --
+-- Indizes für die Tabelle `images`
+--
+ALTER TABLE `images`
+  ADD PRIMARY KEY (`imageID`);
+
+--
 -- Indizes für die Tabelle `news`
 --
 ALTER TABLE `news`
@@ -243,16 +223,10 @@ ALTER TABLE `tags`
   ADD PRIMARY KEY (`tagsID`);
 
 --
--- Indizes für die Tabelle `tagsin`
---
-ALTER TABLE `tagsin`
-  ADD PRIMARY KEY (`tagsInID`);
-
---
 -- Indizes für die Tabelle `tagsinnews`
 --
 ALTER TABLE `tagsinnews`
-  ADD PRIMARY KEY (`tagsInID`);
+  ADD PRIMARY KEY (`news`,`tags`);
 
 --
 -- Indizes für die Tabelle `user`
@@ -281,6 +255,11 @@ ALTER TABLE `category`
 ALTER TABLE `crawleruri`
   MODIFY `uriID` int(10) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT für Tabelle `images`
+--
+ALTER TABLE `images`
+  MODIFY `imageID` int(10) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT für Tabelle `news`
 --
 ALTER TABLE `news`
@@ -296,11 +275,6 @@ ALTER TABLE `ranking`
 ALTER TABLE `tags`
   MODIFY `tagsID` int(10) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT für Tabelle `tagsin`
---
-ALTER TABLE `tagsin`
-  MODIFY `tagsInID` int(10) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
@@ -310,3 +284,6 @@ ALTER TABLE `user`
 --
 ALTER TABLE `usergroup`
   MODIFY `groupID` int(10) NOT NULL AUTO_INCREMENT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
