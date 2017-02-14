@@ -207,6 +207,8 @@ class SpiegelInterpreter extends Interpreter
     //  Saving Image locally
         $img = self::imageRoot . "sp/" . md5($this->headerImage) . ".$ext";
 
+        echo "<p>{$this->uri} saving $img</p>";
+
     //  todo verbindungs Tabelle
 
         file_put_contents($img, file_get_contents($this->headerImage));
