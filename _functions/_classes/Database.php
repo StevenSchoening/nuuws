@@ -141,7 +141,7 @@ class Database implements iSql
     {
         if(gettype($query) == "string")
 
-            throw new CException('fetch_array requires query result not query string');
+            throw new EXCEPTION('fetch_array requires query result not query string');
 
         return $this->mysqli_fetch_array($query);
     }
@@ -200,13 +200,13 @@ class Database implements iSql
      * @param $result
      *
      * @return null|object
-     * @throws CException only query results
+     * @throws EXCEPTION only query results
      */
     public function fetch_object($result)
     {
         if(gettype($result) == "string")
 
-            throw new CException('fetch_object requires query result not query string');
+            throw new EXCEPTION('fetch_object requires query result not query string');
 
         return $this->mysqli_fetch_object($result);
     }
