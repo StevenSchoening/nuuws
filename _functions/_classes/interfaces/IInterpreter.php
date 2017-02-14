@@ -9,5 +9,8 @@
 interface IInterpreter
 {
     public function getInsertQuery();
+    public function getImageQuery();
+    public function getTagInsertQuery();
+    public function getTagInNewsQuery();
     public function isArticle();
 }

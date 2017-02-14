@@ -16,7 +16,7 @@ ini_set('max_execution_time', -1);
 
 #=================== finding uninterpreted URI's ====================
 
-$query = "SELECT * FROM `crawleruri` WHERE `interpreted` LIKE 0 ORDER BY createdTS DESC LIMIT 25";
+$query = "SELECT * FROM `crawleruri` WHERE `interpreted` LIKE 0 ORDER BY createdTS DESC LIMIT 10";
 
 $result = $db->query($query);
 

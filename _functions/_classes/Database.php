@@ -85,7 +85,7 @@ class Database implements iSql
 
             $this->log->append($message);
 
-            if(false)
+            if(TRUE)
             {
                 $loc_string = str_replace(' AND', '<br>AND', $string);
                 $loc_string = str_replace(' OR', '<br>OR', $loc_string);
@@ -118,7 +118,7 @@ class Database implements iSql
     {
         $timer = new Stopwatch;
 
-        $result = $this->link->query($string) or $this->dberror();
+        $result = $this->link->query($string) or $this->dberror($string);
 
         $queryTime = $timer->getTime(FALSE);
 
