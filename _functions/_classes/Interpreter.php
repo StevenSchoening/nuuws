@@ -12,10 +12,6 @@ abstract class Interpreter implements IInterpreter
     protected $uri, $id, $title, $content, $headerImage, $headerImageInfo,
               $author, $publisher, $html, $isArticle, $summary, $tags, $newsId = FALSE;
 
-    const newsTable = "`article`";
-
-    const uriTable  = "`crawleruri`";
-
     const imageRoot = 'C:/xampp/htdocs/nuuws/portal/assets/images/';
 
     public function __construct($uri, $uriId)
