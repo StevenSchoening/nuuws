@@ -115,12 +115,13 @@ class SpiegelInterpreter extends Interpreter
 
     public function isArticle()
     {
-        if(preg_match('#\\d+\\.html#i', $this->uri))
+        return preg_match('#\\d+\\.html#i', $this->uri) ? !strpos($this->uri, "spiegeltv") : FALSE;
+        /*if(preg_match('#\\d+\\.html#i', $this->uri))
 
             return !strpos($this->uri, "spiegeltv");
 
         else
 
-            return FALSE;
+            return FALSE;*/
     }
 }

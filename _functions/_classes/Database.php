@@ -3,7 +3,7 @@
 /**
  * Created by PhpStorm.
  * User: Marvin
- * Date: 10/15/2016
+ * Date: 02/14/2017
  * Time: 11:41 AM
  */
 class Database implements iSql
@@ -33,6 +33,7 @@ class Database implements iSql
         $this->link = mysqli_connect($hostname, $username, $password) or $this->dberror();
 
         if ($this->link != null)
+
 
             mysqli_set_charset($this->link, 'utf8');
     }
