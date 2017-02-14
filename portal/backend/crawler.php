@@ -23,7 +23,7 @@ Crawler::addToWhiteList([
 
 $uris = [
     'http://news.google.com/' => NULL,
-    'http://spiegel.de' => NULL,
+//    'http://spiegel.de' => NULL,
 ];
 
 #========================== crawling ==============================
