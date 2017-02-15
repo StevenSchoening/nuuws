@@ -98,12 +98,12 @@ CREATE TABLE `news` (
 
 ALTER TABLE `news` CHANGE `user` `userID` INT(10) NOT NULL;
 
+ALTER TABLE `news` ADD `priority` INT(10) NOT NULL ;
+
 --
 -- Daten für Tabelle `news`
 --
 
-INSERT INTO `news` (`newsID`, `title`, `content`, `createdTS`, `user`, `published`, `crawlerURI`) VALUES
-(1, 'cultural awareness', '', '2017-01-24 09:48:37', 345678, 0, '');
 
 -- --------------------------------------------------------
 
@@ -336,8 +336,70 @@ CREATE TABLE `newsimage` (
 --
 ALTER TABLE `newsimage`
   ADD PRIMARY KEY (`images`,`news`);
+  
+ALTER TABLE `newsimage` DROP `priority`;  
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- phpMyAdmin SQL Dump
+-- version 4.5.1
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Erstellungszeit: 15. Feb 2017 um 11:25
+-- Server-Version: 10.1.13-MariaDB
+-- PHP-Version: 7.0.8
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Datenbank: `nuuws`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `navigation`
+--
+
+CREATE TABLE `navigation` (
+  `parentID` int(10) NOT NULL,
+  `link` varchar(200) NOT NULL,
+  `linkName` varchar(200) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `isActive` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indizes der exportierten Tabellen
+--
+
+--
+-- Indizes für die Tabelle `navigation`
+--
+ALTER TABLE `navigation`
+  ADD PRIMARY KEY (`parentID`);
+
+--
+-- AUTO_INCREMENT für exportierte Tabellen
+--
+
+--
+-- AUTO_INCREMENT für Tabelle `navigation`
+--
+ALTER TABLE `navigation`
+  MODIFY `parentID` int(10) NOT NULL AUTO_INCREMENT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
 
