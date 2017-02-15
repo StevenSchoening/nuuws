@@ -186,9 +186,15 @@ class SpiegelInterpreter extends Interpreter
     public function isArticle()
     {
         if(preg_match('#\\d+\\.html#i', $this->uri))
+        {
+            if(!strpos($this->uri, "spiegeltv") && !strpos($this->uri, "extras"))
 
-            return !strpos($this->uri, "spiegeltv") && !strpos($this->uri, "extras");
+                return substr_count($this->html, '<input') < 2;
 
+            else
+
+                return FALSE;
+        }
         else
 
             return FALSE;
@@ -207,15 +213,13 @@ class SpiegelInterpreter extends Interpreter
     //  Saving Image locally
         $img = self::imageRoot . "sp/" . md5($this->headerImage) . ".$ext";
 
-        echo "<p>{$this->uri} saving $img</p>";
-
     //  todo verbindungs Tabelle
 
         file_put_contents($img, file_get_contents($this->headerImage));
 
     //  Insert to Database
         return "INSERT INTO `images`(`title`, `description`, `copyright`, `link`, `imagePath`) 
-                VALUES ('{$this->headerImageInfo['title']}', '', 'spiegel', '{$this->headerImage}', '$img')";
+                VALUES ('{$this->headerImageInfo['title']}', '', 'spiegel', '{$this->headerImage}', '$img');";
     }
 
     /**
@@ -277,6 +281,6 @@ class SpiegelInterpreter extends Interpreter
 
             $query .= "('{$this->newsId}', '$id'), ";
 
-        return substr($query, 0, -2);
+        return substr($query, 0, -2) . ';';
     }
 }

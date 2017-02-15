@@ -1,9 +1,19 @@
-ErrorDocument 404 /cms/pages/404.php
+#ErrorDocument 404 /cms/pages/404.php    # todo
 
 RewriteEngine on
 
-# user login
-RewriteRule ^login/(.*)(\/|\\)?$        /cms/index.php?page=login&redirect=$1       [NC,L]
-RewriteRule ^login$                     /cms/index.php?page=login                   [NC,L]
+# Login
 
-RewriteRule ^user/(\d+)/.*$             /cms/index.php?page=user&id=$1              [NC,L] # user pages
+RewriteRule ^login/(.*)(\/|\\)?$            /cms/index.php?page=login&redirect=$1       [NC,L]
+RewriteRule ^login$                         /cms/index.php?page=login                   [NC,L]
+
+# User
+
+RewriteRule ^user/(\d+)/.*$                 /cms/index.php?page=user&id=$1              [NC,L]
+
+# Nachrichten
+
+RewriteRule ^artikel-einreichen.?(html)?$   /cms/index.php?page=articleManagement       [NC,L]
+RewriteRule ^nachrichten\/(\d)+\/.*\.html$  /cms/index.php?page=article&id=$1           [NC,L]
+RewriteRule ^nachrichten\/?$                /cms/index.php?page=articles                [NC,L] # todo
+

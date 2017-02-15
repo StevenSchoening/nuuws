@@ -9,7 +9,7 @@
  */
 abstract class Interpreter implements IInterpreter
 {
-    protected $uri, $id, $title, $content, $headerImage, $headerImageInfo,
+    protected $uri, $crawlerId, $title, $content, $headerImage, $headerImageInfo,
               $author, $publisher, $html, $isArticle, $summary, $tags, $newsId = FALSE;
 
     const imageRoot = 'C:/xampp/htdocs/nuuws/portal/assets/images/';
@@ -24,7 +24,7 @@ abstract class Interpreter implements IInterpreter
     {
         $this->isArticle       = FALSE;
         $this->uri             = $uri;
-        $this->id              = $uriId;
+        $this->crawlerId       = $uriId;
         $this->html            = file_get_contents($uri);
         $this->isArticle       = $this->isArticle();
         $this->headerImageInfo = $this->tags = [];
@@ -72,7 +72,7 @@ abstract class Interpreter implements IInterpreter
      */
     private function getUpdateUriQuery()
     {
-        return "UPDATE `crawleruri` SET `interpreted` = '1' WHERE `uriID` LIKE '{$this->id}'";
+        return "UPDATE `crawleruri` SET `interpreted` = '1' WHERE `uriID` LIKE '{$this->crawlerId}';";
     }
 
     /**
@@ -84,6 +84,7 @@ abstract class Interpreter implements IInterpreter
 
         if($this->isArticle)
         {
+        //  News creation
             Database::getLastInstance()->query($this->getInsertQuery());
 
             $this->newsId = Database::getLastInstance()->insert_id();
