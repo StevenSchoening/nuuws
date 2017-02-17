@@ -8,7 +8,7 @@
 
 require '../../_functions/_init.php';
 
-error_reporting(0);
+//error_reporting(0);
 
 $srt = new ScriptRunTime;
 
@@ -16,7 +16,7 @@ ini_set('max_execution_time', -1);
 
 #=================== finding uninterpreted URI's ====================
 
-$query = "SELECT * FROM `crawleruri` WHERE `interpreted` LIKE 0 ORDER BY createdTS DESC LIMIT 5";
+$query = "SELECT * FROM `crawleruri` WHERE `interpreted` LIKE 0 ORDER BY createdTS DESC LIMIT 20";
 
 $result = $db->query($query);
 
@@ -43,3 +43,5 @@ if($db->mysqli_num_rows($result))
 
         flush();ob_flush();flush();ob_flush();
     }
+
+else echo "Keine Neuen Urls!";

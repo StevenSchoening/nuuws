@@ -2,14 +2,38 @@
 /**
  * Created by PhpStorm.
  * User: Marvin
- * Date: 02/14/2017
+ * Date: 12/13/2016
  * Time: 10:45 AM
  */
-echo 1; die;
+
 require_once '_functions/_init.php';
 
-$test = '<br>Test';
+$page = isset($_GET['page']) ? $_GET['page'] : FALSE;
 
-$smarty->display('portal/frontend/templates/index.tpl');
+switch($page)
+{
+    case 'articleManagement':
 
+        $smarty->display('portal/frontend/templates/article/articleManagement.tpl');
+
+        break;
+    case 'article':
+
+        $test = "abc";
+
+        $articleContent = $nm->getArticleContent();
+
+//        Debugger::dump($articleContent);
+
+        $smarty->assign('articleContent', $articleContent);
+
+        $smarty->display('portal/frontend/templates/article/article.tpl');
+
+        break;
+    default :
+
+        $smarty->display('portal/frontend/templates/index.tpl');
+
+        break;
+}
 ?>

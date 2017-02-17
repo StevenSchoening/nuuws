@@ -33,6 +33,7 @@ $uris = [
   Database::getLastInstance()->query("TRUNCATE TABLE `tags`");
   Database::getLastInstance()->query("TRUNCATE TABLE `tagsinnews`");
   Database::getLastInstance()->query("TRUNCATE TABLE `images`");
+  Database::getLastInstance()->query("TRUNCATE TABLE `newsimage`");
 
 #========================== crawling ==============================
 

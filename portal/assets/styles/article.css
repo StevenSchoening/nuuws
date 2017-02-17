@@ -26,7 +26,7 @@ header > nav ul{
 article{
     position: absolute;
     left: 20%;
-    top: 600px;
+    /*top: 600px;*/
 }
 .navigation_list li{
     font-size:20px;
@@ -51,10 +51,18 @@ article{
 .hideSearchArticle{
     display:none;
 }
-section#headerImage{
-    position: absolute;
-    left: 0;
-    top: 70px;
+section#headerImage img{
+    display: block;
+    margin: 70px auto 0 auto;
+    max-width: 800px;
+    width: 100%;
+
+    -webkit-box-shadow: 0px 5px 25px -3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 5px 25px -3px rgba(0,0,0,0.75);
+    box-shadow: 0px 5px 25px -3px rgba(0,0,0,0.75);
+
+    border: 1px solid rgba(0,0,0,.5);
+    border-top: 0px;
 }
 .article_description{
     overflow: hidden;

@@ -10,7 +10,8 @@
 abstract class Interpreter implements IInterpreter
 {
     protected $uri, $crawlerId, $title, $content, $headerImage, $headerImageInfo,
-              $author, $publisher, $html, $isArticle, $summary, $tags, $newsId = FALSE;
+              $author, $publisher, $html, $summary, $tags, $newsId = FALSE,
+              $imgId = FALSE, $isArticle;
 
     const imageRoot = 'C:/xampp/htdocs/nuuws/portal/assets/images/';
 
@@ -82,16 +83,71 @@ abstract class Interpreter implements IInterpreter
     {
         Database::getLastInstance()->query($this->getUpdateUriQuery());
 
-        if($this->isArticle)
+        if($this->isArticle && $this->resultIsValid())
         {
+            $this->repairLinks();
+
+            echo "<p><b>$this->uri</b> als Artikel gespeichert!</p>";
+
         //  News creation
-            Database::getLastInstance()->query($this->getInsertQuery());
+            $query = $this->getInsertQuery();
+
+            if($query !== "")
+
+                Database::getLastInstance()->query($this->getInsertQuery());
 
             $this->newsId = Database::getLastInstance()->insert_id();
 
-            Database::getLastInstance()->query($this->getImageQuery());
-            Database::getLastInstance()->query($this->getTagInsertQuery());
-            Database::getLastInstance()->query($this->getTagInNewsQuery());
+        //  Image
+            $query = $this->getImageQuery();
+
+            if($query !== "")
+
+                Database::getLastInstance()->query($query);
+
+            $this->imgId = Database::getLastInstance()->insert_id();
+
+        //  Tags
+            $query = $this->getTagInsertQuery();
+
+            if($query !== "")
+
+                Database::getLastInstance()->query($query);
+
+            $query = $this->getTagInNewsQuery();
+
+            if($query !== "")
+
+                Database::getLastInstance()->query($query);
+
+        //  linking news and image
+            $query = $this->getNewsImageQuery();
+
+            if($query !== "")
+
+                Database::getLastInstance()->query($query);
+        }
+
+        else echo "<p>$this->uri <b>nicht</b> gespeichert!</p>";
+
+        flush();ob_flush();
+        flush();ob_flush();
+    }
+
+    private function repairLinks()
+    {
+        return;
+
+        $html = str_get_html($this->content);
+
+        if(sizeof($links = $html->find('a'))  !== 0)
+        {
+            foreach($links as $link)
+
+                if(isset($link->attr['href']) && $link->attr['href'][0] == '/')
+
+                    $this->content =
+                        preg_replace('#(\'|")' . preg_quote($link->attr['href']) . '#', '$1' . $this->getRootUri() . $link->attr['href'], $this->content);
         }
     }
 

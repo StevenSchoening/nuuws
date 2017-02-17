@@ -51,8 +51,8 @@ article{
 .hideSearchArticle{
     display:none;
 }
-section#headerImage{
-    position: absolute;
-    left: 0;
-    top: 70px;
+section#headerImage img
+{
+    display: block;
+    margin: 70px auto 0px auto;
 }

@@ -64,8 +64,6 @@ class SpiegelInterpreter extends Interpreter
             return;
         }
 
-        echo "<p>$this->uri</p>";       // todo entfernen
-
 //      Summary content
 
         $this->summary = $summary[0]->innertext;
@@ -128,7 +126,7 @@ class SpiegelInterpreter extends Interpreter
      */
     private function extractImage($image)
     {
-        $this->headerImage = $image[0]->find('a')[0]->innertext;
+        $this->headerImage = @$image[0]->find('a')[0]->innertext;
 
         if($this->headerImage === NULL && is_object($image[0]->children[0]))
         {
@@ -186,15 +184,9 @@ class SpiegelInterpreter extends Interpreter
     public function isArticle()
     {
         if(preg_match('#\\d+\\.html#i', $this->uri))
-        {
-            if(!strpos($this->uri, "spiegeltv") && !strpos($this->uri, "extras"))
 
-                return substr_count($this->html, '<input') < 2;
+            return !strpos($this->uri, "spiegeltv") && !strpos($this->uri, "extras");
 
-            else
-
-                return FALSE;
-        }
         else
 
             return FALSE;
@@ -282,5 +274,24 @@ class SpiegelInterpreter extends Interpreter
             $query .= "('{$this->newsId}', '$id'), ";
 
         return substr($query, 0, -2) . ';';
+    }
+
+    /**
+     * @return string
+     */
+    public function getNewsImageQuery()
+    {
+        return is_numeric($this->imgId) && is_numeric($this->newsId) ? "INSERT INTO `newsimage`(`images`, `news`) VALUES ('$this->imgId', '$this->newsId');"
+                                                                     : "";
+    }
+
+    public function resultIsValid()
+    {
+        return substr_count($this->content, '<input') == 0 && substr_count($this->content, '<script') == 0;
+    }
+
+    public function getRootUri()
+    {
+        return 'http://spiegel.de';
     }
 }

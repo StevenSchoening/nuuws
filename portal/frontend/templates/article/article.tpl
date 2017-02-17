@@ -1,34 +1,15 @@
 {include file='portal/frontend/templates/header/header.tpl'}
 
 <section id="headerImage">
-    <img src="portal/assets/images/loipen.jpeg">
+    <img src="{$articleContent['imagePath']}">
 </section>
 
 <article>
-    <h1>Titel des Artikels</h1>
+    <h1>{$articleContent['title']}</h1>
 
     <section>
-        <div class="article_description"><div class="article_creationTimestamp">15.02.2017, Bremen</div>
-            Text-TextText-TextText-TextText-TextText-TextText-TextText-TextText-Text
-            Text-TextText-TextText-TextText-TextText-TextText-TextText-TextText-TextText-Text<br>
-            Text-TextText-TextText-TextText-TextText-Text<br>
-            Text-TextText-TextText-TextText-TextText-TextText-TextText-TextText-TextText-Text<br>
-            <br>
-            Text-TextText-TextText-TextText-TextText-Text<br>
-            Text-TextText-TextText-TextText-Text<br>
-            Text-TextText-TextText-TextText-TextText-TextText-TextText-TextText-Text<br>
-            <br>
-            Text-TextText-TextText-TextText-TextText-Text<br>
-            Text-TextText-TextText-TextText-Text<br>
-            Text-TextText-TextText-TextText-TextText-TextText-TextText-TextText-Text<br>
-            <br>
-            Text-TextText-TextText-TextText-TextText-Text<br>
-            Text-TextText-TextText-TextText-Text<br>
-            Text-TextText-TextText-TextText-TextText-TextText-TextText-TextText-Text<br>
-            <br>
-            Text-TextText-TextText-TextText-TextText-Text<br>
-            Text-TextText-TextText-TextText-Text<br>
-            Text-TextText-TextText-TextText-TextText-TextText-TextText-TextText-Text<br>
+        <div class="article_description"><div class="article_creationTimestamp">{$articleContent['timestamp']}</div>
+            {$articleContent['content']}
         </div>
     </section>
 </article>

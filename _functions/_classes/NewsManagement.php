@@ -10,13 +10,47 @@ class NewsManagement{
 
     private $database;
 
-    function __construct()
+    function __construct($db = NULL)
     {
-        $this->database = Database::getLastInstance();
+        $this->database = isset($db) ? $db : Database::getLastInstance();
 
         if(isset($_POST['title']))
 
             self::createArticle();
+    }
+
+    public function getArticleContent()
+    {
+        $id             = $this->database->real_escape($_GET['id']);
+
+        if(!is_numeric($id)) return FALSE;
+
+        $query          = "SELECT news.*, images.* FROM `news`
+                            
+                           INNER JOIN `newsimage` ON newsimage.news = news.newsID
+                            
+                           INNER JOIN `images` ON newsimage.images = images.imageID
+                            
+                           WHERE `newsID` LIKE '$id'";
+
+        $result         = $this->database->query($query);
+
+        if($this->database->mysqli_num_rows($result) && $row = $this->database->fetch_object($result))
+        {
+            $articleContent = [
+                'title'     => $row->title,
+                'content'   => $row->content,
+                'creator'   => $row->userID == 0 ? $row->copyright : "",
+                'timestamp' => $row->createdTS,
+                'imagePath' => str_replace(DEFAULT_PATH_LOCAL, DEFAULT_PATH_WEB, $row->imagePath),
+            ];
+
+            $articleContent['creator'][0] = strtoupper($articleContent['creator'][0]);
+
+            return $articleContent;
+        }
+
+        return FALSE;
     }
 
     public function createArticle(){

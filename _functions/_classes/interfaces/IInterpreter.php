@@ -12,5 +12,8 @@ interface IInterpreter
     public function getImageQuery();
     public function getTagInsertQuery();
     public function getTagInNewsQuery();
+    public function getNewsImageQuery();
     public function isArticle();
+    public function resultIsValid();
+    public function getRootUri();
 }
