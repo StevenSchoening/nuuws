@@ -8,5 +8,6 @@ if(isset($_COOKIE['developer']))
 ?>
 <a href="cookies_mavin.php">Ich bin Marvin</a><br />
 <a href="cookies_steven.php">Ich bin Steven</a><br />
+<a href="cookies_steven_home.php">Ich bin Steven@home</a><br />
 </body>
 </html>

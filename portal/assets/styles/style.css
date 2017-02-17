@@ -51,8 +51,29 @@ article{
 .hideSearchArticle{
     display:none;
 }
-section#headerImage img
-{
-    display: block;
-    margin: 70px auto 0px auto;
+section#headerImage{
+    position: absolute;
+    left: 0;
+    top: 70px;
 }
+.article_creationTimestamp{
+    position: relative;
+    text-align: right;
+    top: -44px;
+    right: 200px;
+}
+section#headerImage img{
+    width:100%;
+}
+footer{
+    position: absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:50px;
+    background-color: #2e2d30;
+}
+
+
+
+
