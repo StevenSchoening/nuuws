@@ -41,12 +41,14 @@ class SpiegelInterpreter extends Interpreter
 
         $patterns = [
             '#\s?\-\sSPIEGEL\sONLINE#',
-            '#\:\s#'
+            '#\:\s#',
+            '#\,\s#'
         ];
 
         $replace = [
             '',
-            ' '
+            ' ',
+            '<br />'
         ];
 
 
@@ -54,15 +56,6 @@ class SpiegelInterpreter extends Interpreter
 
         echo "<p>Found title '$this->title'</p>";
 
-//        $titleArray = explode("SPIEGEL", $titleTag);
-//
-//        if(sizeof($titleArray) == 4)
-//
-//            $this->title = self::trimTitle($titleArray[1]);
-//
-//        else
-//
-//            $this->title = self::trimTitle($titleArray[0]);
     }
 
     /**
