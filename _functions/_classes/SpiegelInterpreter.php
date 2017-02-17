@@ -39,15 +39,30 @@ class SpiegelInterpreter extends Interpreter
 
         $titleTag = $matches[1][0];
 
-        $titleArray = explode("SPIEGEL", $titleTag);
+        $patterns = [
+            '#\s?\-\sSPIEGEL\sONLINE#',
+            '#\:\s#'
+        ];
 
-        if(sizeof($titleArray) == 4)
+        $replace = [
+            '',
+            ' '
+        ];
 
-            $this->title = self::trimTitle($titleArray[1]);
 
-        else
+        $this->title = preg_replace($patterns, $replace, $titleTag);
 
-            $this->title = self::trimTitle($titleArray[0]);
+        echo "<p>Found title '$this->title'</p>";
+
+//        $titleArray = explode("SPIEGEL", $titleTag);
+//
+//        if(sizeof($titleArray) == 4)
+//
+//            $this->title = self::trimTitle($titleArray[1]);
+//
+//        else
+//
+//            $this->title = self::trimTitle($titleArray[0]);
     }
 
     /**
@@ -88,6 +103,11 @@ class SpiegelInterpreter extends Interpreter
 
                 $this->tags[] = trim(str_replace('&gt;', '', strip_tags($li[$i]->innertext)));
         }
+
+    //  Timestamp
+        if(sizeof($timestamp = $html->find('.timeformat')) !== 0 && isset($timestamp[0]->attr['datetime']))
+
+            $this->timestamp = $timestamp[0]->attr['datetime'];
     }
 
     /**
@@ -171,9 +191,11 @@ class SpiegelInterpreter extends Interpreter
         $escapedTitle   = Database::getLastInstance()->real_escape($this->title);
         $escapedContent = Database::getLastInstance()->real_escape($this->content);
 
+        $tsStr = $this->timestamp === FALSE ? "NULL" : "'$this->timestamp'";
+
         return "INSERT INTO `news`(`newsID`, `title`, `content`, `createdTS`, `userID`, `published`, `crawlerURI`) 
                 VALUES (
-                NULL, '$escapedTitle', '$escapedContent', NULL, '0', '1', '$this->uri');";
+                NULL, '$escapedTitle', '$escapedContent', $tsStr, '0', '1', '$this->uri');";
     }
 
     /**
@@ -293,5 +315,10 @@ class SpiegelInterpreter extends Interpreter
     public function getRootUri()
     {
         return 'http://spiegel.de';
+    }
+
+    public function getPublisher()
+    {
+        return "Spiegel";
     }
 }

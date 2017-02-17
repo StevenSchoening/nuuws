@@ -1,7 +1,7 @@
 {include file='portal/frontend/templates/header/header.tpl'}
 
 <section id="headerImage">
-    <img src="{$articleContent['imagePath']}">
+    <img title='{$articleContent['imageTitle']}' src="{$articleContent['imagePath']}">
 </section>
 
 <article>

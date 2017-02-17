@@ -25,7 +25,7 @@ class NewsManagement{
 
         if(!is_numeric($id)) return FALSE;
 
-        $query          = "SELECT news.*, images.* FROM `news`
+        $query          = "SELECT news.*, images.copyright, images.imagePath, images.title as imgTitle FROM `news`
                             
                            INNER JOIN `newsimage` ON newsimage.news = news.newsID
                             
@@ -38,12 +38,20 @@ class NewsManagement{
         if($this->database->mysqli_num_rows($result) && $row = $this->database->fetch_object($result))
         {
             $articleContent = [
-                'title'     => $row->title,
-                'content'   => $row->content,
-                'creator'   => $row->userID == 0 ? $row->copyright : "",
-                'timestamp' => $row->createdTS,
-                'imagePath' => str_replace(DEFAULT_PATH_LOCAL, DEFAULT_PATH_WEB, $row->imagePath),
+                'title'      => $row->title,
+                'content'    => $row->content,
+                'creator'    => $row->userID == 0 ? $row->copyright : "",
+                'imagePath'  => str_replace(DEFAULT_PATH_LOCAL, DEFAULT_PATH_WEB, $row->imagePath),
+                'imageTitle' => $row->imgTitle,
             ];
+
+            if(strlen($row->crawlerURI) > 4)
+
+                $articleContent['timestamp']  = "<a href='$row->crawlerURI' target='_blank'>"
+                                              . Interpreter::getHost($row->crawlerURI)
+                                              . "</a> am $row->createdTS";
+
+            else $articleContent['timestamp'] = $row->createdTS;
 
             $articleContent['creator'][0] = strtoupper($articleContent['creator'][0]);
 

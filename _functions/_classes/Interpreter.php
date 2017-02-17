@@ -11,7 +11,7 @@ abstract class Interpreter implements IInterpreter
 {
     protected $uri, $crawlerId, $title, $content, $headerImage, $headerImageInfo,
               $author, $publisher, $html, $summary, $tags, $newsId = FALSE,
-              $imgId = FALSE, $isArticle;
+              $imgId = FALSE, $isArticle, $timestamp = FALSE;
 
     const imageRoot = 'C:/xampp/htdocs/nuuws/portal/assets/images/';
 
@@ -54,14 +54,18 @@ abstract class Interpreter implements IInterpreter
      *
      * @return string publisher / host
      */
-    public static function getPublisher($uri)
+    public static function getHost($uri)
     {
-        // parse url to retrieve host
-        $host = parse_url($uri)["host"];
+    //  parse url to retrieve host
+        $host    = parse_url($uri)["host"];
 
-        $host = explode(".", $host);
+        $host    = explode(".", $host);
 
-        return strtolower($host[sizeof($host) - 2]); // -1 = top level domain, -2 = domain
+        $host    = strtolower($host[sizeof($host) - 2]); // -1 = top level domain, -2 = domain
+
+        $host[0] = strtoupper($host[0]);
+
+        return $host;
     }
 
     /**
@@ -136,19 +140,23 @@ abstract class Interpreter implements IInterpreter
 
     private function repairLinks()
     {
-        return;
-
         $html = str_get_html($this->content);
 
         if(sizeof($links = $html->find('a'))  !== 0)
-        {
+
             foreach($links as $link)
 
                 if(isset($link->attr['href']) && $link->attr['href'][0] == '/')
+                {
+                    $pattern = '#(\'|")' . preg_quote($link->attr['href']) . '(\'|")#';
 
-                    $this->content =
-                        preg_replace('#(\'|")' . preg_quote($link->attr['href']) . '#', '$1' . $this->getRootUri() . $link->attr['href'], $this->content);
-        }
+                //  If no target is set we will add _blank
+
+                    $replace = isset($link->attr['target']) ? '$1' . $this->getRootUri() . $link->attr['href'] . '$2'
+                                                            : '$1' . $this->getRootUri() . $link->attr['href'] . '$2 target="_blank"';
+
+                    $this->content = preg_replace($pattern, $replace, $this->content);
+                }
     }
 
     /**

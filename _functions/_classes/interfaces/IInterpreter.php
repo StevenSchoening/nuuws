@@ -16,4 +16,5 @@ interface IInterpreter
     public function isArticle();
     public function resultIsValid();
     public function getRootUri();
+    public function getPublisher();
 }

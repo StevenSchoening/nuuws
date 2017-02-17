@@ -8,7 +8,7 @@
 
 require '../../_functions/_init.php';
 
-//error_reporting(0);
+error_reporting(E_ALL);
 
 $srt = new ScriptRunTime;
 
@@ -16,7 +16,7 @@ ini_set('max_execution_time', -1);
 
 #=================== finding uninterpreted URI's ====================
 
-$query = "SELECT * FROM `crawleruri` WHERE `interpreted` LIKE 0 ORDER BY createdTS DESC LIMIT 20";
+$query = "SELECT * FROM `crawleruri` WHERE `interpreted` LIKE 0 ORDER BY createdTS DESC LIMIT 10";
 
 $result = $db->query($query);
 
@@ -24,9 +24,9 @@ if($db->mysqli_num_rows($result))
 
     while($row = $db->fetch_object($result))
     {
-        switch($publisher = Interpreter::getPublisher($row->uri))
+        switch($publisher = Interpreter::getHost($row->uri))
         {
-            case 'spiegel' :
+            case 'Spiegel' :
 
                 $interpreter = new SpiegelInterpreter($row->uri, $row->uriID);
 
