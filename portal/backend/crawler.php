@@ -28,12 +28,12 @@ $uris = [
 
 #========================== RESET & TRUNCATE ==============================
 
-  Database::getLastInstance()->query("TRUNCATE TABLE `crawleruri`");
-  Database::getLastInstance()->query("TRUNCATE TABLE `news`");
-  Database::getLastInstance()->query("TRUNCATE TABLE `tags`");
-  Database::getLastInstance()->query("TRUNCATE TABLE `tagsinnews`");
-  Database::getLastInstance()->query("TRUNCATE TABLE `images`");
-  Database::getLastInstance()->query("TRUNCATE TABLE `newsimage`");
+//  Database::getLastInstance()->query("TRUNCATE TABLE `crawleruri`");
+//  Database::getLastInstance()->query("TRUNCATE TABLE `news`");
+//  Database::getLastInstance()->query("TRUNCATE TABLE `tags`");
+//  Database::getLastInstance()->query("TRUNCATE TABLE `tagsinnews`");
+//  Database::getLastInstance()->query("TRUNCATE TABLE `images`");
+//  Database::getLastInstance()->query("TRUNCATE TABLE `newsimage`");
 
 #========================== crawling ==============================
 

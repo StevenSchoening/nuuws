@@ -51,11 +51,7 @@ class SpiegelInterpreter extends Interpreter
             '<br />'
         ];
 
-
         $this->title = preg_replace($patterns, $replace, $titleTag);
-
-        echo "<p>Found title '$this->title'</p>";
-
     }
 
     /**

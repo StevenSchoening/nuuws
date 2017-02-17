@@ -65,4 +65,6 @@ spl_autoload_register(function ($class)         # gets called if a class is used
 $db = new Database;
 $db->select_db("nuuws");
 
-$nm = new NewsManagement;
+$nm    = new NewsManagement;
+
+$nuuws = new Nuuws;

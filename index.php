@@ -12,24 +12,34 @@ $page = isset($_GET['page']) ? $_GET['page'] : FALSE;
 
 switch($page)
 {
-    case 'articleManagement':
+    case 'login' :
+
+        $smarty->display('portal/frontend/templates/pages/login.tpl');
+
+        break;
+
+    case 'articleManagement' :
 
         $smarty->display('portal/frontend/templates/article/articleManagement.tpl');
 
         break;
-    case 'article':
 
-        $test = "abc";
+    case 'article' :
 
         $articleContent = $nm->getArticleContent();
-
-//        Debugger::dump($articleContent);
 
         $smarty->assign('articleContent', $articleContent);
 
         $smarty->display('portal/frontend/templates/article/article.tpl');
 
         break;
+
+    case 'articles' :
+
+        $smarty->display('portal/frontend/templates/article/articles.tpl');
+
+        break;
+
     default :
 
         $smarty->display('portal/frontend/templates/index.tpl');
