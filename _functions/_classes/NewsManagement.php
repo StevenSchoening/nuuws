@@ -35,11 +35,7 @@ class NewsManagement{
 
             $query .= " WHERE `newsID` IN (SELECT `news` FROM `categorynews` WHERE `category` LIKE '$selectedCategoryID')";
 
-        else
-
-            $query .= " ORDER BY `createdTS`";
-
-        $query .= " LIMIT 5";
+        $query .= " ORDER BY `createdTS` DESC LIMIT 5";
 
         $result = $this->database->query($query);
 
@@ -54,7 +50,8 @@ class NewsManagement{
                         self::getHtmlTitle($row->title),
                         str_replace(DEFAULT_PATH_LOCAL, DEFAULT_PATH_WEB, $row->imagePath),
                         $row->imgTitle,
-                        $row->content
+                        $row->content,
+                        date('d.m.Y h:m', strtotime($row->createdTS)) . ' Uhr'
                     ];
 
         return $articles;
@@ -63,7 +60,7 @@ class NewsManagement{
     private function getHtmlTitle($title)
     {
         $search  = [' ', '.', '"', "'", '<br>', '</br>'];
-        $replace = ['_', '_', '', '', '', ''];
+        $replace = ['_', '_', '', '', '-', '-'];
 
         return strip_tags(str_replace($search, $replace, $title));
     }
@@ -73,7 +70,7 @@ class NewsManagement{
         $categories = [];
 
         $query      = "SELECT * FROM `category` WHERE `catName` 
-                       IN ('Wirtschaft', 'Politik', 'Panorama', 'Kultur')";
+                       IN ('Wirtschaft', 'Politik', 'Panorama', 'Kultur', 'Sport')";
 
         $result     = $this->database->query($query);
 

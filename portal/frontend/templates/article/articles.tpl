@@ -23,6 +23,7 @@
         float: left;
         width: 100%;
         margin-bottom: 10px;
+        border-bottom: 1px dotted rgba(0,0,0,.33);
     }
 
     div.nuuwsPrev div
@@ -45,6 +46,13 @@
     {
         clear: both;
         margin-left: 25px;
+    }
+
+    .nuuwsImg a img
+    {
+        -webkit-box-shadow: 0px 5px 15px 0.5px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 5px 15px 0.5px rgba(0,0,0,0.75);
+        box-shadow: 0px 5px 15px 0.5px rgba(0,0,0,0.75);
     }
 
     p.ts
@@ -78,7 +86,7 @@
             </div>
             <a href="/nuuws/nachrichten/{$k}/{$v[1]}.html" target="_blank" title="{$v[0]}">{$v[0]|truncate:60}</a>
             <br />
-            <p class="ts">abc</p>
+            <p class="ts">{$v[5]}</p>
             <p>{$v[4]|strip_tags|truncate:140}</p>
         </div>
         <br />
