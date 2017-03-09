@@ -310,4 +310,36 @@ class SpiegelInterpreter extends Interpreter
     {
         return "Spiegel";
     }
+
+    public function getCategoryQuery()
+    {
+        if(sizeof($this->tags) === 0)
+
+            return "";
+
+        $cat    = Database::getLastInstance()->real_escape($this->tags[0]);
+
+        $query  = "SELECT * FROM `category` WHERE `catName` LIKE '$cat'";
+
+        $result = Database::getLastInstance()->query($query);
+
+        if(Database::getLastInstance()->mysqli_num_rows($result) == 0)
+
+            return "INSERT INTO `category`(`catName`) VALUES ('$cat')";
+
+        else
+        {
+            $row = Database::getLastInstance()->fetch_object($result);
+
+            $this->catID = $row->catID;
+
+            return "";
+        }
+    }
+
+    public function getCategoryInNewsQuery()
+    {
+        return "INSERT INTO `categorynews`(`category`, `news`) 
+                VALUES ('$this->catID', '$this->newsId')";
+    }
 }

@@ -11,7 +11,7 @@ abstract class Interpreter implements IInterpreter
 {
     protected $uri, $crawlerId, $title, $content, $headerImage, $headerImageInfo,
               $author, $publisher, $html, $summary, $tags, $newsId = FALSE,
-              $imgId = FALSE, $isArticle, $timestamp = FALSE;
+              $imgId = FALSE, $isArticle, $timestamp = FALSE, $catID = FALSE;
 
     const imageRoot = 'C:/xampp/htdocs/nuuws/portal/assets/images/';
 
@@ -126,6 +126,22 @@ abstract class Interpreter implements IInterpreter
 
         //  linking news and image
             $query = $this->getNewsImageQuery();
+
+            if($query !== "")
+
+                Database::getLastInstance()->query($query);
+
+        //  Category
+
+            $query = $this->getCategoryQuery();
+
+            if($query !== "")
+            {
+                Database::getLastInstance()->query($query);
+                $this->catID = Database::getLastInstance()->insert_id();
+            }
+
+            $query = $this->getCategoryInNewsQuery();
 
             if($query !== "")
 

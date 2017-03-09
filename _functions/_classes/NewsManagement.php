@@ -19,6 +19,65 @@ class NewsManagement{
             self::createArticle();
     }
 
+    public function getArticles()
+    {
+        $articles = [];
+
+        $selectedCategoryID = isset($_GET['cat']) ? $_GET['cat'] : FALSE;
+
+        $query = "SELECT news.*, images.copyright, images.imagePath, images.title as imgTitle FROM `news`
+                            
+                  INNER JOIN `newsimage` ON newsimage.news = news.newsID
+                    
+                  INNER JOIN `images` ON newsimage.images = images.imageID";
+
+        if($selectedCategoryID)
+
+            $query .= " WHERE `newsID` IN (SELECT `news` FROM `categorynews` WHERE `category` LIKE '$selectedCategoryID')";
+
+        else
+
+            $query .= " ORDER BY `createdTS`";
+
+        $query .= " LIMIT 5";
+
+        $result = $this->database->query($query);
+
+        if($this->database->mysqli_num_rows($result))
+
+            while($row = $this->database->fetch_object($result))
+
+                $articles[$row->newsID] = [$row->title, self::getHtmlTitle($row->title)];
+
+        return $articles;
+    }
+
+    private function getHtmlTitle($title)
+    {
+        $search  = [' ', '.', '"', "'"];
+        $replace = ['_', '_', '', ''];
+
+        return strip_tags(str_replace($search, $replace, $title));
+    }
+
+    public function getCategories()
+    {
+        $categories = [];
+
+        $query      = "SELECT * FROM `category` WHERE `catName` 
+                       IN ('Wirtschaft', 'Politik', 'Panorama', 'Kultur')";
+
+        $result     = $this->database->query($query);
+
+        if($this->database->mysqli_num_rows($result) > 0)
+
+            while($row = $this->database->fetch_object($result))
+
+                $categories[$row->catID] = $row->catName;
+
+        return $categories;
+    }
+
     public function getArticleContent()
     {
         $id             = $this->database->real_escape($_GET['id']);

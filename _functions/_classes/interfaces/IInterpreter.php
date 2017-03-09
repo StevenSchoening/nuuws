@@ -17,4 +17,7 @@ interface IInterpreter
     public function resultIsValid();
     public function getRootUri();
     public function getPublisher();
+    public function getCategoryQuery();
+    public function getCategoryInNewsQuery();
+//    public function
 }

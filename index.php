@@ -36,7 +36,7 @@ switch($page)
 
     case 'articles' :
 
-        $smarty->display('portal/frontend/templates/article/articles.tpl');
+        include 'portal/frontend/pages/news.php';
 
         break;
 
