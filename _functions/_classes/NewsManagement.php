@@ -47,15 +47,23 @@ class NewsManagement{
 
             while($row = $this->database->fetch_object($result))
 
-                $articles[$row->newsID] = [$row->title, self::getHtmlTitle($row->title)];
+                $articles[$row->newsID] =
+
+                    [
+                        strip_tags($row->title),
+                        self::getHtmlTitle($row->title),
+                        str_replace(DEFAULT_PATH_LOCAL, DEFAULT_PATH_WEB, $row->imagePath),
+                        $row->imgTitle,
+                        $row->content
+                    ];
 
         return $articles;
     }
 
     private function getHtmlTitle($title)
     {
-        $search  = [' ', '.', '"', "'"];
-        $replace = ['_', '_', '', ''];
+        $search  = [' ', '.', '"', "'", '<br>', '</br>'];
+        $replace = ['_', '_', '', '', '', ''];
 
         return strip_tags(str_replace($search, $replace, $title));
     }

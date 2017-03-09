@@ -11,6 +11,47 @@
         width: 760px;
         margin: 0px auto;
     }
+
+    div.nuuwsPrev, div.nuuwsPrev div, div.nuuwsPrev a
+    {
+        display: block;
+        float:left;
+    }
+
+    div.nuuwsPrev
+    {
+        float: left;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    div.nuuwsPrev div
+    {
+        clear: both;
+    }
+
+    div.nuuwsImg
+    {
+        float:left;
+        padding-right: 15px;
+    }
+
+    div.nuuwsPrev a
+    {
+        padding: 5px 0px 0px 5px;
+    }
+
+    .nuuwsImg p
+    {
+        clear: both;
+        margin-left: 25px;
+    }
+
+    p.ts
+    {
+        padding: 0;
+        margin-bottom: 1px;
+    }
 </style>
 
 
@@ -29,7 +70,18 @@
     <p style="margin-top: 15px"></p>
 
     {foreach from=$content key=k item=v}
-    <a href="/nuuws/nachrichten/{$k}/{$v[1]}.html">{$v[0]}</a><br />
+        <div class="nuuwsPrev">
+            <div class="nuuwsImg">
+                <a href="/nuuws/nachrichten/{$k}/{$v[1]}.html">
+                    <img src="{$v[2]}" title="{$v[3]}" width=175 height=100>
+                </a>
+            </div>
+            <a href="/nuuws/nachrichten/{$k}/{$v[1]}.html" target="_blank" title="{$v[0]}">{$v[0]|truncate:60}</a>
+            <br />
+            <p class="ts">abc</p>
+            <p>{$v[4]|strip_tags|truncate:140}</p>
+        </div>
+        <br />
     {/foreach}
 </div>
 
