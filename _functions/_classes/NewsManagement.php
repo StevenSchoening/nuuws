@@ -51,7 +51,9 @@ class NewsManagement{
                         str_replace(DEFAULT_PATH_LOCAL, DEFAULT_PATH_WEB, $row->imagePath),
                         $row->imgTitle,
                         $row->content,
-                        date('d.m.Y h:m', strtotime($row->createdTS)) . ' Uhr'
+                        date('d.m.Y', strtotime($row->createdTS))
+                        . ' '
+                        . Interpreter::getHost($row->crawlerURI)
                     ];
 
         return $articles;
