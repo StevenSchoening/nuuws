@@ -8,7 +8,7 @@
  */
 class Nuuws
 {
-    private $database;
+    private $database, $activeUser = NULL;
 
     public function __construct()
     {
@@ -17,6 +17,22 @@ class Nuuws
         if(isset($_POST['logMeIn']))
 
             $this->logIn($_POST['username'], $_POST['password']);
+
+        $this->setActiveUser();
+    }
+
+    private function setActiveUser()
+    {
+        if(!isset($_SESSION['ID']) && !isset($_SESSION['userID']))
+
+            return;
+
+        $query  = "SELECT * FROM `user` WHERE `userID` LIKE '{$_SESSION['userID']}';";
+        $result = $this->database->query($query);
+
+        if($this->database->mysqli_num_rows($result) && $row = $this->database->fetch_object($result))
+
+            $this->activeUser = new User($row);
     }
 
     private function logIn($username, $password)
@@ -25,17 +41,30 @@ class Nuuws
         $username = $this->database->real_escape($username);
         $password = md5($password);
 
-        $query = "SELECT * FROM `user` WHERE `userName` LIKE '$username' AND `password` LIKE '$password'";
+        $query = "SELECT * FROM `user` WHERE (`userName` LIKE '$username' OR `email` LIKE '$username') 
+                  AND `password` LIKE '$password'";
 
         $result = $this->database->query($query);
 
-        if($this->database->mysqli_num_rows($result))
+        if($this->database->mysqli_num_rows($result) && $row = $this->database->fetch_object($result))
         {
-        //  todo Session insert
+            $userID = $row->userID;
 
-            return TRUE;
+            $query = "INSERT INTO `sessions`(`userID`) VALUES ('$userID')";
+
+            $this->database->query($query);
+
+            $_SESSION['ID'] = $this->database->insert_id();
+
+            $_SESSION['userID'] = $userID;
         }
+    }
 
-        else return FALSE;
+    /**
+     * @return User
+     */
+    public function getActiveUser()
+    {
+        return $this->activeUser;
     }
 }

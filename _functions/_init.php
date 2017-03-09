@@ -8,29 +8,24 @@
 //todo http://jiri.hybek.cz/wa-mediabox/
 error_reporting(E_ALL);
 
-session_start();
+@session_start();
 
 //  Paths
 if(isset($_COOKIE['developer']) && $_COOKIE['developer'] == 'Steven')
-{
-    define('DEFAULT_PATH_WEB', 'http://localhost/nuuws/');
+
     define('DEFAULT_PATH_LOCAL', 'C:/xampp/htdocs/nuuws/');
-    define('NAVITPL', DEFAULT_PATH_LOCAL . "portal/frontend/templates/nav/navigation.tpl");
-}
 
 else if(isset($_COOKIE['developer']) && $_COOKIE['developer'] == 'StevenHome')
-{
-    define('DEFAULT_PATH_WEB', 'http://localhost/nuuws/');
+
     define('DEFAULT_PATH_LOCAL', 'C:/xampp/htdocs/nuuws/');
-    define('NAVITPL', DEFAULT_PATH_LOCAL . "portal/frontend/templates/nav/navigation.tpl");
-}
 
 else
-{
-    define('DEFAULT_PATH_WEB', 'http://localhost/nuuws/');
+
     define('DEFAULT_PATH_LOCAL', 'C:/xampp/htdocs/nuuws/');
-    define('NAVITPL', DEFAULT_PATH_LOCAL . "portal/frontend/templates/nav/navigation.tpl");
-}
+
+
+define('DEFAULT_PATH_WEB', 'http://localhost/nuuws/');
+define('NAVITPL', DEFAULT_PATH_LOCAL . "portal/frontend/templates/nav/navigation.tpl");
 
 ini_set("max_execution_time", -1);
 
@@ -66,5 +61,4 @@ $db = new Database;
 $db->select_db("nuuws");
 
 $nm    = new NewsManagement;
-
 $nuuws = new Nuuws;
