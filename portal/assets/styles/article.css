@@ -1,69 +1,96 @@
-article{
-    position: relative;
-    width: 70%;
-    min-height: 100%;
-    text-align: left;
-    padding-left: 15%;
-    padding-top: 100px;
+article
+{
+    position     : relative;
+    width        : 70%;
+    min-height   : 100%;
+    text-align   : left;
+    padding-left : 15%;
+    padding-top  : 100px;
 }
 
-section#headerImage{
-    position: relative;
-    top: 70px;
-    left: 0px;
-}
-.article_description{
-    overflow: hidden;
-    width: 80%;
-    padding-bottom: 50px;
+section#headerImage
+{
+    position : relative;
+    top      : 70px;
+    left     : 0px;
 }
 
-.article_creationTimestamp{
-    position: relative;
-    text-align: right;
-    top: -44px;
-    right: 200px;
+.article_description
+{
+    overflow       : hidden;
+    width          : 80%;
+    padding-bottom : 50px;
 }
 
-div.tabs {
-    overflow: hidden;
-    background-color: #2e2d30;
-    padding:15px;
+.article_creationTimestamp
+{
+    position   : relative;
+    text-align : right;
+    top        : -44px;
+    right      : 200px;
 }
-.tabs > a {
-    background-color: #2e2d30;
-    color: white;
-    text-decoration: none;
-    padding: 10px 10px 10px 10px;
-    text-align: center;
-    transition: 0.3s;
-    font-size: 17px;
+
+div.tabs
+{
+    overflow         : hidden;
+    background-color : #2E2D30;
+    padding          : 15px;
 }
-.tabs > a:hover{
-    background-color: #424046;
+
+.tabs > a
+{
+    background-color : #2E2D30;
+    color            : white;
+    text-decoration  : none;
+    padding          : 10px 10px 10px 10px;
+    text-align       : center;
+    transition       : 0.3s;
+    font-size        : 17px;
 }
+
+.tabs > a:hover
+{
+    background-color : #424046;
+}
+
 /* Style the tab content */
-.tabcontent {
-    display: none;
-    padding: 6px 12px;
-    -webkit-animation: fadeEffect 1s;
-    animation: fadeEffect 1s;
+.tabcontent
+{
+    display           : none;
+    padding           : 6px 12px;
+    -webkit-animation : fadeEffect 1s;
+    animation         : fadeEffect 1s;
 }
+
 #articleOption_create,
 #articleOption_search,
 #articleOption_change
 {
- border-right:1px solid white;
+    border-right : 1px solid white;
 }
 
 section#headerImage img
-
 {
-    display: block;
-    -webkit-box-shadow: 0px 5px 25px -3px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 5px 25px -3px rgba(0,0,0,0.75);
-    box-shadow: 0px 5px 25px -3px rgba(0,0,0,0.75);
-    border-top: 0px;
-    margin:0px auto;
+    display            : block;
+    -webkit-box-shadow : 0px 5px 25px -3px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow    : 0px 5px 25px -3px rgba(0, 0, 0, 0.75);
+    box-shadow         : 0px 5px 25px -3px rgba(0, 0, 0, 0.75);
+    border-top         : 0px;
+    margin             : 0px auto;
 }
 
+/*
+ *  articles.tpl
+ *
+ */
+
+div.nuuwsImg
+{
+    float        : left;
+    margin-right : 15px;
+}
+
+div.nuuwsPrev
+{
+    border-bottom: 1px dotted rgba(0,0,0,.33);
+}
