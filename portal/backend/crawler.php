@@ -28,13 +28,17 @@ $uris = [
 
 #========================== RESET & TRUNCATE ==============================
 
+if(isset($_GET['reset']))
+{
   Database::getLastInstance()->query("TRUNCATE TABLE `crawleruri`");
   Database::getLastInstance()->query("TRUNCATE TABLE `news`");
   Database::getLastInstance()->query("TRUNCATE TABLE `tags`");
   Database::getLastInstance()->query("TRUNCATE TABLE `tagsinnews`");
   Database::getLastInstance()->query("TRUNCATE TABLE `images`");
   Database::getLastInstance()->query("TRUNCATE TABLE `newsimage`");
-
+  Database::getLastInstance()->query("TRUNCATE TABLE `categorynews`");
+  Database::getLastInstance()->query("TRUNCATE TABLE `category`");
+}
 #========================== crawling ==============================
 
 echo "<h2>Starte Crawling!</h2>";
@@ -48,3 +52,5 @@ foreach($uris as $uri => &$crawler)
 }
 
 Crawler::cleanDatabase();
+
+//Nuuws::reloadPageIn(250000);

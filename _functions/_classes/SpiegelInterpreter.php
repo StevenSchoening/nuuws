@@ -214,7 +214,9 @@ class SpiegelInterpreter extends Interpreter
         if(($ext = pathinfo($this->headerImage)['extension']) == "") return "";
 
     //  Saving Image locally
-        $img = self::imageRoot . "sp/" . md5($this->headerImage) . ".$ext";
+        $img = self::imageRoot . "sp/" . md5($this->headerImage) . rand(12,10000) . ".$ext";
+
+        echo "<p>Speichere $this->headerImage als $img</p>";
 
     //  todo verbindungs Tabelle
 

@@ -1,6 +1,6 @@
 article
 {
-    position     : relative;
+    /*position     : relative;*/
     width        : 70%;
     min-height   : 100%;
     text-align   : left;
@@ -92,5 +92,13 @@ div.nuuwsImg
 
 div.nuuwsPrev
 {
-    border-bottom: 1px dotted rgba(0,0,0,.33);
+    border-bottom : 1px dotted rgba(0, 0, 0, .33);
+}
+
+.nuuwsImg a img
+{
+    -webkit-box-shadow : 0px 5px 15px 0.5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow    : 0px 5px 15px 0.5px rgba(0, 0, 0, 0.75);
+    box-shadow         : 0px 5px 15px 0.5px rgba(0, 0, 0, 0.75);
+    border             : 1px solid rgba(0, 0, 0, .33);
 }

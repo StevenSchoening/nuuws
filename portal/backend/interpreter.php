@@ -45,3 +45,5 @@ if($db->mysqli_num_rows($result))
     }
 
 else echo "Keine Neuen Urls!";
+
+//Nuuws::reloadPageIn(3000);

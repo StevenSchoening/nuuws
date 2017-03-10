@@ -68,4 +68,12 @@ class Nuuws
         return $this->activeUser;
     }
 
+    public static function reloadPageIn($ms)
+    {
+        echo "<script>";
+
+        echo "setTimeout(function(){ location.reload(); }, $ms);";
+
+        echo "</script>";
+    }
 }

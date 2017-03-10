@@ -72,7 +72,7 @@ class NewsManagement{
         $categories = [];
 
         $query      = "SELECT * FROM `category` WHERE `catName` 
-                       IN ('Wirtschaft', 'Politik', 'Panorama', 'Kultur', 'Sport')";
+                       IN ('Wirtschaft', 'Politik', 'Panorama', 'Kultur', 'Sport', 'Gesundheit')";
 
         $result     = $this->database->query($query);
 
