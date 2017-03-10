@@ -42,10 +42,9 @@
     <div id="deleteArticle">
 
     </div>
+
 </article>
 
-{*include file='portal/frontend/templates/footer/footer.tpl'*}
 
+{include file='portal/frontend/templates/footer/footer.tpl'}
 
-</body>
-</html>

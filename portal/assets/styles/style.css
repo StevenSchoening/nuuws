@@ -2,6 +2,11 @@ body
 {
     background-color: #fff;
     font-family:'EurostileExtended', Arial;
+    position:relative;
+    margin:0;
+    border:0;
+    padding:0;
+    text-align:center;
 }
 header{
     height:70px;
@@ -23,11 +28,7 @@ header > nav ul{
     height: 30%;
     position: absolute;
 }
-article{
-    position: absolute;
-    left: 35%;
-    top: 50%;
-}
+
 .navigation_list li{
     font-size:20px;
     color:#fff;
@@ -46,32 +47,8 @@ article{
     border: 1px solid #c7d308;
     color:#c7d308;
 }
-.hideCreateArticle,
-.hideChangeArticle,
-.hideSearchArticle{
-    display:none;
-}
-section#headerImage{
-    position: absolute;
-    left: 0;
-    top: 70px;
-}
-.article_creationTimestamp{
-    position: relative;
-    text-align: right;
-    top: -44px;
-    right: 200px;
-}
-section#headerImage img{
-    width:100%;
-}
-footer{
-    position: absolute;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:50px;
-    background-color: #2e2d30;
+.tabLine{
+    border-right: 1px solid white;
 }
 
 
