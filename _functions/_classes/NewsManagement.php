@@ -10,6 +10,8 @@ class NewsManagement{
 
     private $database;
 
+    const displayedCategories = "('Wirtschaft', 'Politik', 'Panorama', 'Kultur', 'Sport', 'Gesundheit')";
+
     function __construct($db = NULL)
     {
         $this->database = isset($db) ? $db : Database::getLastInstance();
@@ -18,6 +20,7 @@ class NewsManagement{
 
             self::createArticle();
     }
+
 
     public function getArticles()
     {
@@ -31,9 +34,16 @@ class NewsManagement{
                     
                   INNER JOIN `images` ON newsimage.images = images.imageID";
 
-        if($selectedCategoryID)
+        if(is_numeric($selectedCategoryID))
 
             $query .= " WHERE `newsID` IN (SELECT `news` FROM `categorynews` WHERE `category` LIKE '$selectedCategoryID')";
+
+        else if($selectedCategoryID == "a")
+
+            $query .= " WHERE `newsID` IN 
+                       (SELECT `news` FROM `categorynews` WHERE `category` IN 
+                            (SELECT `catID` FROM `category` WHERE `catName` NOT IN " . self::displayedCategories
+                    . "))";
 
         $query .= " ORDER BY `createdTS` DESC LIMIT 5";
 
@@ -71,10 +81,9 @@ class NewsManagement{
     {
         $categories = [];
 
-        $query      = "SELECT * FROM `category` WHERE `catName` 
-                       IN ('Wirtschaft', 'Politik', 'Panorama', 'Kultur', 'Sport', 'Gesundheit')";
+        $query      = "SELECT * FROM `category` WHERE `catName` IN " . self::displayedCategories;
 
-        $result     = $this->database->query($query);
+        $result = $this->database->query($query);
 
         if($this->database->mysqli_num_rows($result) > 0)
 

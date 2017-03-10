@@ -7,7 +7,7 @@
  */
 
 $categories = $nm->getCategories();
-$content    = $nm->getArticles();
+$content    = $nm->getArticles(); 
 
 $smarty->assign('categories', $categories);
 $smarty->assign('content', $content);

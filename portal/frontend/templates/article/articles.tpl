@@ -12,6 +12,7 @@
                 <a href="/nuuws/nachrichten/{$k}/{$v}/">{$v}</a>
             {/foreach}
 
+            <a href="/nuuws/nachrichten/andere/">Andere</a>
         </div>
 
         <p style="margin-top: 15px"></p>
