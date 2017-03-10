@@ -57,6 +57,15 @@ class Nuuws
             $_SESSION['ID']     = $this->database->insert_id();
 
             $_SESSION['userID'] = $userID;
+
+//            echo "Location: " . DEFAULT_PATH_WEB; die;
+            header("Location: " . DEFAULT_PATH_WEB);
+        }
+
+        else
+        {
+//            echo "Location: " . DEFAULT_PATH_WEB . 'login/failed'; die;
+            header("Location: " . DEFAULT_PATH_WEB . 'login/failed');
         }
     }
 

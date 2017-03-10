@@ -6,13 +6,13 @@
         <h1><u>Nachrichten</u></h1>
 
         <div class="tabs">
-            <a href="/nuuws/nachrichten/"><b>Alles</b></a>
+            <a href="/nuuws/nachrichten/" class="tabMarker"><b>Alles</b></a>
 
             {foreach from=$categories key=k item=v}
-                <a href="/nuuws/nachrichten/{$k}/{$v}/">{$v}</a>
+                <a href="/nuuws/nachrichten/{$k}/{$v}/" class="tabMarker">{$v}</a>
             {/foreach}
 
-            <a href="/nuuws/nachrichten/andere/">Andere</a>
+            <a href="/nuuws/nachrichten/andere/" class="tabMarker">Andere</a>
         </div>
 
         <p style="margin-top: 15px"></p>

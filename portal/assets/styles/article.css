@@ -61,7 +61,7 @@ div.tabs
     -webkit-animation : fadeEffect 1s;
     animation         : fadeEffect 1s;
 }
-
+.tabMarker,
 #articleOption_create,
 #articleOption_search,
 #articleOption_change
@@ -77,6 +77,7 @@ section#headerImage img
     box-shadow         : 0px 5px 25px -3px rgba(0, 0, 0, 0.75);
     border-top         : 0px;
     margin             : 0px auto;
+    max-width          : 100%;
 }
 
 /*
