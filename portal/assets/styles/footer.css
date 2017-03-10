@@ -1,25 +1,26 @@
-footer{
-    position: absolute;
-    bottom:0;
-    left:0;
-    width:100%;
+footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     background-color: #2e2d30;
     padding: 15px 0px 15px 0px;
 }
 
-footer .footer_content{
+footer .footer_content {
     text-decoration: none;
-    height: 100%;
     color: white;
     padding: 10px 5px 5px 40px;
     overflow: hidden;
     text-align: center;
 }
-footer .footer_content a{
-    color:white;
-    text-decoration:none;
+
+footer .footer_content a {
+    color: white;
+    text-decoration: none;
     padding: 0px 20px 0px 20px;
 }
-footer .footer_content a:hover{
-    color:#c7d308;
+
+footer .footer_content a:hover {
+    color: #c7d308;
 }

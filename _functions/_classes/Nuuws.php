@@ -54,7 +54,7 @@ class Nuuws
 
             $this->database->query($query);
 
-            $_SESSION['ID'] = $this->database->insert_id();
+            $_SESSION['ID']     = $this->database->insert_id();
 
             $_SESSION['userID'] = $userID;
         }
@@ -67,4 +67,5 @@ class Nuuws
     {
         return $this->activeUser;
     }
+
 }
