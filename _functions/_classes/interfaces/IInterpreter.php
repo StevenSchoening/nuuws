@@ -8,5 +8,16 @@
  */
 interface IInterpreter
 {
-    public function getInsetQuery();
+    public function getInsertQuery();
+    public function getImageQuery();
+    public function getTagInsertQuery();
+    public function getTagInNewsQuery();
+    public function getNewsImageQuery();
+    public function isArticle();
+    public function resultIsValid();
+    public function getRootUri();
+    public function getPublisher();
+    public function getCategoryQuery();
+    public function getCategoryInNewsQuery();
+//    public function
 }

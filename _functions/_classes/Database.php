@@ -3,7 +3,7 @@
 /**
  * Created by PhpStorm.
  * User: Marvin
- * Date: 10/15/2016
+ * Date: 02/14/2017
  * Time: 11:41 AM
  */
 class Database implements iSql
@@ -33,6 +33,7 @@ class Database implements iSql
         $this->link = mysqli_connect($hostname, $username, $password) or $this->dberror();
 
         if ($this->link != null)
+
 
             mysqli_set_charset($this->link, 'utf8');
     }
@@ -84,7 +85,7 @@ class Database implements iSql
 
             $this->log->append($message);
 
-            if(false)
+            if(TRUE)
             {
                 $loc_string = str_replace(' AND', '<br>AND', $string);
                 $loc_string = str_replace(' OR', '<br>OR', $loc_string);
@@ -117,7 +118,7 @@ class Database implements iSql
     {
         $timer = new Stopwatch;
 
-        $result = $this->link->query($string) or $this->dberror();
+        $result = $this->link->query($string) or $this->dberror($string);
 
         $queryTime = $timer->getTime(FALSE);
 
@@ -140,7 +141,7 @@ class Database implements iSql
     {
         if(gettype($query) == "string")
 
-            throw new CException('fetch_array requires query result not query string');
+            throw new EXCEPTION('fetch_array requires query result not query string');
 
         return $this->mysqli_fetch_array($query);
     }
@@ -199,13 +200,13 @@ class Database implements iSql
      * @param $result
      *
      * @return null|object
-     * @throws CException only query results
+     * @throws EXCEPTION only query results
      */
     public function fetch_object($result)
     {
         if(gettype($result) == "string")
 
-            throw new CException('fetch_object requires query result not query string');
+            throw new EXCEPTION('fetch_object requires query result not query string');
 
         return $this->mysqli_fetch_object($result);
     }

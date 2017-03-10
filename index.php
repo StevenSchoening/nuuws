@@ -8,8 +8,42 @@
 
 require_once '_functions/_init.php';
 
-$test = '<br>Test';
+$page = isset($_GET['page']) ? $_GET['page'] : FALSE;
 
-$smarty->display('portal/frontend/templates/index.tpl');
+switch($page)
+{
+    case 'login' :
 
+        $smarty->display('portal/frontend/templates/pages/login.tpl');
+
+        break;
+
+    case 'articleManagement' :
+
+        $smarty->display('portal/frontend/templates/article/articleManagement.tpl');
+
+        break;
+
+    case 'article' :
+
+        $articleContent = $nm->getArticleContent();
+
+        $smarty->assign('articleContent', $articleContent);
+
+        $smarty->display('portal/frontend/templates/article/article.tpl');
+
+        break;
+
+    case 'articles' :
+
+        include 'portal/frontend/pages/news.php';
+
+        break;
+
+    default :
+
+        $smarty->display('portal/frontend/templates/index.tpl');
+
+        break;
+}
 ?>
