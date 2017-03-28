@@ -51,6 +51,6 @@ foreach($uris as $uri => &$crawler)
     $crawler->save();
 }
 
-Crawler::cleanDatabase();
+//Crawler::cleanDatabase();
 
 //Nuuws::reloadPageIn(250000);

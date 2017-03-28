@@ -12,7 +12,13 @@
             <input type="password" placeholder="Passwort" name="password" /><br />
             <input type="submit" name="logMeIn" />
         </form>
+
+        <br />
+
+        <p>Noch nicht registriert? <a href="/nuuws/register">HIER</a> klicken</p>
     </div>
+
+
 
 </article>
 

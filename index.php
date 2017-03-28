@@ -12,7 +12,10 @@ $page    = isset($_GET['page']) ? $_GET['page'] : FALSE;
 
 $isAdmin = $nuuws->getActiveUser() != FALSE ? $nuuws->getActiveUser()->isAdmin() : FALSE;
 
+$isLogedIn = $nuuws->getActiveUser() != FALSE;
+
 $smarty->assign('isAdmin', $isAdmin);
+$smarty->assign('isLogedIn', $isLogedIn);
 
 switch($page)
 {
@@ -23,6 +26,12 @@ switch($page)
         $smarty->assign('failure', $failure);
 
         $smarty->display('portal/frontend/templates/pages/login.tpl');
+
+        break;
+
+    case 'register' :
+
+        $smarty->display('portal/frontend/templates/pages/register.tpl');
 
         break;
 

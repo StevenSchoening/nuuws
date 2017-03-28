@@ -7,6 +7,7 @@ RewriteEngine on
 RewriteRule ^login\/failed$                 index.php?page=login&failure=1
 RewriteRule ^login\/(.*)(\/|\\)?$           index.php?page=login&redirect=$1       [NC,L]
 RewriteRule ^login$                         index.php?page=login                   [NC,L]
+RewriteRule ^register$                      index.php?page=register                [NC,L]
 
 # User
 
