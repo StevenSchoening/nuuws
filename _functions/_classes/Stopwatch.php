@@ -3,7 +3,7 @@
 /**
  * Created by PhpStorm.
  * User: Marvin
- * Date: 20.04.2016
+ * Date: 1/25/2017
  * Time: 09:08
  */
 class Stopwatch

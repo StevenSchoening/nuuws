@@ -116,6 +116,16 @@
      });
  });
 
+$(document).ready(function ()
+{
+    $('#kontakt').click(function (e)
+    {
+        e.preventDefault();
+        window.location.href = "mailto:team.nuuws@gmail.com?subject=Kontakt";
+        return false;
+    });
+});
+
 
 function calculateAge(birthday)    // birthday is a date
 {
