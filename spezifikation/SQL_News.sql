@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 09, 2017 at 11:26 AM
+-- Generation Time: Mar 28, 2017 at 09:07 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.0.15
 
@@ -268,7 +268,7 @@ CREATE TABLE `user` (
   `birthDat` date NOT NULL,
   `createdTS` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `email` varchar(200) NOT NULL,
-  `ipAdress` varchar(200) NOT NULL,
+  `isActive` tinyint(1) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -276,8 +276,8 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userID`, `userName`, `password`, `fName`, `lName`, `birthDat`, `createdTS`, `email`, `ipAdress`, `isAdmin`) VALUES
-(1, '', 'sdskdfkdsfkdsh4', 'nikja', 'mylvakanam', '0000-00-00', '2017-01-24 10:01:51', '', '', 0);
+INSERT INTO `user` (`userID`, `userName`, `password`, `fName`, `lName`, `birthDat`, `createdTS`, `email`, `isActive`, `isAdmin`) VALUES
+(1, '', 'sdskdfkdsfkdsh4', 'nikja', 'mylvakanam', '0000-00-00', '2017-01-24 10:01:51', '', 0, 0);
 
 --
 -- Indexes for dumped tables
