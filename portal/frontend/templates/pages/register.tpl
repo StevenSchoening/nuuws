@@ -1,5 +1,3 @@
-
-
 {include file='portal/frontend/templates/header/header.tpl'}
 
 <style>
@@ -67,12 +65,22 @@
             </div>
 
             <div>
+                <label>Vorname</label>
+                <input type="text" name="fname">
+            </div>
+
+            <div>
+                <label>Nachname</label>
+                <input type="text" name="nname">
+            </div>
+
+            <div>
                 <label>Geburtsdatum</label>
                 <input type="date" name="birthdate">
             </div>
 
             <div>
-                <input type="submit" name="birthdate" value="Registrieren">
+                <input type="submit" name="register" value="Registrieren">
             </div>
 
         </form>

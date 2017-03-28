@@ -18,7 +18,28 @@ class Nuuws
 
             $this->logIn($_POST['username'], $_POST['password']);
 
+        if(isset($_POST['register']))
+
+            $this->register();
+
         $this->setActiveUser();
+    }
+
+    private function register()
+    {
+        $username  = Database::getLastInstance()->real_escape($_POST['username']);
+        $password  = md5($_POST['password']);
+        $email     = Database::getLastInstance()->real_escape($_POST['email']);
+        $birthdate = Database::getLastInstance()->real_escape($_POST['birthdate']);
+        $fName     = Database::getLastInstance()->real_escape($_POST['fname']);
+        $nName     = Database::getLastInstance()->real_escape($_POST['nname']);
+
+        $query = "INSERT INTO `user`(`userID`, `userName`, `password`, `fName`, `lName`, `birthDat`, `createdTS`, `email`, `isActive`, `isAdmin`) 
+                  VALUES (NULL, '$username', '$password', '$fName', '$nName', '$birthdate', NULL, '$email', '1', '0')";
+
+        Database::getLastInstance()->query($query);
+
+        header("Location: " . DEFAULT_PATH_WEB . 'registered');
     }
 
     private function setActiveUser()

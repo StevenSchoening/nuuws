@@ -93,24 +93,9 @@
              return false;
          }
 
-         if(!password.match(/[A-Z]/))
-         {
-             alert('Passwort muss mindestens einen großen Buchstaben enthalten');
-             event.preventDefault();
-             return false;
-         }
-
          if(!password.match(/[0-9]/))
          {
              alert('Passwort muss mindestens eine Zahl enthalten');
-             event.preventDefault();
-             return false;
-         }
-
-     // Passwords need special characters?
-         if(!password.match(/[^a-zA-Z0-9]/) && false)
-         {
-             alert('Passwort muss mindestens ein Sonderzeichen enthalten');
              event.preventDefault();
              return false;
          }
