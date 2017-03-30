@@ -5,6 +5,9 @@
         {if $isAdmin}
             <a href="/nuuws/artikel-einreichen.html"><li>Artikel verwalten</li></a>
         {/if}
+        {if $isAdmin}
+            <a href="/nuuws/backend"><li>Backend</li></a>
+        {/if}
         {if !$isLogedIn}
             <a href="/nuuws/login"><li>Einloggen</li></a>
         {/if}
