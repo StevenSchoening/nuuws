@@ -6,8 +6,8 @@
  * Time: 09:11
  */
 
-class NewsManagement{
-
+class NewsManagement
+{
     private $database;
 
     const displayedCategories = "('Wirtschaft', 'Politik', 'Panorama', 'Kultur', 'Sport', 'Gesundheit')";
@@ -20,6 +20,76 @@ class NewsManagement{
         {
             self::createArticle();
         }
+
+        if(isset($_POST['saveCategories']))
+
+            self::saveCategories();
+
+        if(isset($_POST['addCategory']))
+
+            self::addCategory();
+    }
+
+    private function addCategory()
+    {
+        $name   = $this->database->real_escape($_POST['catName']);
+
+        $query  = "SELECT * FROM `category` WHERE `catName` LIKE '$name'";
+
+        $result = $this->database->query($query);
+
+        if(!$this->database->mysqli_num_rows($result))
+
+            $this->database->query("INSERT INTO `category`(`catID`, `catName`) VALUES (NULL, '$name')");
+
+        header("Location: " . DEFAULT_PATH_WEB . 'backend');
+    }
+
+    private function saveCategories()
+    {
+        $this->database->query("TRUNCATE TABLE `categorytags`");
+
+        $query     = "INSERT INTO `categorytags`(`category`, `tag`) VALUES ";
+
+        $sendQuery = FALSE;
+
+        foreach($_POST as $name => $value)
+        {
+            if(preg_match('#^cat\_(\d+)#', $name, $rgx))
+            {
+                $sendQuery = TRUE;
+
+                $catID     = $rgx[1];
+
+                foreach($value as $val)
+
+                    $query .= "('$catID', '$val'), ";
+            }
+        }
+
+        if($sendQuery)
+        {
+            $this->database->query(substr($query, 0, -2));
+
+            header("Location: " . DEFAULT_PATH_WEB . 'backend');
+        }
+    }
+
+    public function getSelectedTags($catID)
+    {
+        $tags = [];
+
+        $query  = "SELECT * FROM `categorytags` WHERE `category` LIKE '$catID'";
+
+        $result = $this->database->query($query);
+
+        if($this->database->mysqli_num_rows($result))
+
+            while($row = $this->database->fetch_object($result))
+
+                $tags[] = $row->tag;
+
+        return $tags;
     }
 
     public function getArticles()
@@ -32,18 +102,31 @@ class NewsManagement{
                             
                   INNER JOIN `newsimage` ON newsimage.news = news.newsID
                     
-                  INNER JOIN `images` ON newsimage.images = images.imageID WHERE news.published LIKE 1";
+                  INNER JOIN `images` ON newsimage.images = images.imageID";
+
+
 
         if(is_numeric($selectedCategoryID))
 
-            $query .= " WHERE `newsID` IN (SELECT `news` FROM `categorynews` WHERE `category` LIKE '$selectedCategoryID')";
+            $query .= " WHERE `newsID` IN (SELECT `news` FROM `tagsinnews` WHERE `tags` IN 
+                        (SELECT tag FROM `categorytags` WHERE `category` LIKE '$selectedCategoryID')
+                        ) AND `news`.published LIKE 1";
 
-        else if($selectedCategoryID == "a")
 
-            $query .= " WHERE `newsID` IN 
-                       (SELECT `news` FROM `categorynews` WHERE `category` IN 
-                            (SELECT `catID` FROM `category` WHERE `catName` NOT IN " . self::displayedCategories
-                    . "))";
+        else if($selectedCategoryID == "a") // todo
+        {
+            $query .= " WHERE `newsID` IN (SELECT `news` FROM `tagsinnews` WHERE `tags` NOT IN
+                        (SELECT `category` FROM `categorynews` WHERE `category` IN 
+                        (SELECT `catID` FROM `category` WHERE `catName` NOT IN " . self::displayedCategories . ")
+                        )
+                        ) AND `news`.published LIKE 1";
+        }
+
+        else
+
+            $query .= ' WHERE `news`.published LIKE 1';
+
+
 
         $query .= " ORDER BY `createdTS` DESC LIMIT 5";
 
@@ -84,6 +167,40 @@ class NewsManagement{
         $query      = "SELECT * FROM `category` WHERE `catName` IN " . self::displayedCategories;
 
         $result = $this->database->query($query);
+
+        if($this->database->mysqli_num_rows($result) > 0)
+
+            while($row = $this->database->fetch_object($result))
+
+                $categories[$row->catID] = $row->catName;
+
+        return $categories;
+    }
+
+    public function getAllTags()
+    {
+        $tags   = [];
+
+        $query  = "SELECT * FROM `tags`";
+
+        $result = $this->database->query($query);
+
+        if($this->database->mysqli_num_rows($result) > 0)
+
+            while($row = $this->database->fetch_object($result))
+
+                $tags[$row->tagsID] = $row->tagsName;
+
+        return $tags;
+    }
+
+    public function getAllCategories()
+    {
+        $categories = [];
+
+        $query      = "SELECT * FROM `category` ORDER BY `catID`";
+
+        $result     = $this->database->query($query);
 
         if($this->database->mysqli_num_rows($result) > 0)
 

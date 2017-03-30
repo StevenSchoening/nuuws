@@ -131,21 +131,21 @@ abstract class Interpreter implements IInterpreter
 
                 Database::getLastInstance()->query($query);
 
-        //  Category
-
-            $query = $this->getCategoryQuery();
-
-            if($query !== "")
-            {
-                Database::getLastInstance()->query($query);
-                $this->catID = Database::getLastInstance()->insert_id();
-            }
-
-            $query = $this->getCategoryInNewsQuery();
-
-            if($query !== "")
-
-                Database::getLastInstance()->query($query);
+//        //  Category
+//
+//            $query = $this->getCategoryQuery();
+//
+//            if($query !== "")
+//            {
+//                Database::getLastInstance()->query($query);
+//                $this->catID = Database::getLastInstance()->insert_id();
+//            }
+//
+//            $query = $this->getCategoryInNewsQuery();
+//
+//            if($query !== "")
+//
+//                Database::getLastInstance()->query($query);
         }
 
         else echo "<p>$this->uri <b>nicht</b> gespeichert!</p>";

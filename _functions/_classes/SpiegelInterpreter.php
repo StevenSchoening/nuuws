@@ -226,6 +226,8 @@ class SpiegelInterpreter extends Interpreter
 
         file_put_contents($img, file_get_contents($this->headerImage));
 
+        $this->headerImageInfo['title'] = Database::getLastInstance()->real_escape($this->headerImageInfo['title']);
+
     //  Insert to Database
         return "INSERT INTO `images`(`title`, `description`, `copyright`, `link`, `imagePath`) 
                 VALUES ('{$this->headerImageInfo['title']}', '', 'spiegel', '{$this->headerImage}', '$img');";
