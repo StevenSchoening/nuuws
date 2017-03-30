@@ -94,9 +94,10 @@ $smarty->display('portal/frontend/templates/header/header.tpl');
 
 <?php
 
-$deleteImg = '<img src="/nuuws/portal/assets/" width="32" height="32">';
-
-$editImg = '<img src="https://cdn4.iconfinder.com/data/icons/meBaze-Freebies/512/edit-notes.png" width="32" height="32">';
+$deleteImg  = '<img src="/nuuws/portal/assets/images/x.png" width="32" height="32">';
+$editImg    = '<img src="https://cdn4.iconfinder.com/data/icons/meBaze-Freebies/512/edit-notes.png" width="32" height="32">';
+$ampelRot   = '<img class="ampel" src="/nuuws/portal/assets/images/nicht_zugelassen.png" width="48" height="48">';
+$ampelGruen = '<img class="ampel" src="/nuuws/portal/assets/images/zugelassen.png" width="48" height="48">';
 
 foreach($nuuws->getUser() as $user)
 {
@@ -110,7 +111,7 @@ foreach($nuuws->getUser() as $user)
     echo "<td>{$user['email']}</td>";
     echo "<td>{$user['birthDat']}</td>";
     echo "<td>";
-    echo $user['isAdmin'] == "0" ? "Nein" : "Ja";
+    echo $user['isAdmin'] == "0" ? $ampelRot : $ampelGruen;
     echo "</td>";
 
     echo "<td>$editImg</td>";
