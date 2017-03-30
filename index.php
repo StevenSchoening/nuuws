@@ -8,10 +8,9 @@
 
 require_once '_functions/_init.php';
 
-$page    = isset($_GET['page']) ? $_GET['page'] : FALSE;
+$page      = isset($_GET['page']) ? $_GET['page'] : FALSE;
 
-$isAdmin = $nuuws->getActiveUser() != FALSE ? $nuuws->getActiveUser()->isAdmin() : FALSE;
-
+$isAdmin   = $nuuws->getActiveUser() != FALSE ? $nuuws->getActiveUser()->isAdmin() : FALSE;
 $isLogedIn = $nuuws->getActiveUser() != FALSE;
 
 $smarty->assign('isAdmin', $isAdmin);
@@ -55,6 +54,14 @@ switch($page)
 
         include 'portal/frontend/pages/news.php';
 
+        break;
+
+    case 'edit-articles':
+
+        $content = $nm->searchArticle();
+        $smarty->assign('content', $content);
+
+        $smarty->display('portal/frontend/templates/article/edit-articles.tpl');
         break;
 
     default :

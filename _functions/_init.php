@@ -8,7 +8,8 @@
 //todo http://jiri.hybek.cz/wa-mediabox/
 error_reporting(E_ALL);
 
-@session_start();
+session_name('nuuws');
+session_start();
 
 //  Paths
 if(isset($_COOKIE['developer']) && $_COOKIE['developer'] == 'Steven')

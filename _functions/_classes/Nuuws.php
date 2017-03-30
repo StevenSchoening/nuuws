@@ -71,7 +71,7 @@ class Nuuws
         {
             $userID = $row->userID;
 
-            $query = "INSERT INTO `sessions`(`userID`) VALUES ('$userID')";
+            $query = "INSERT INTO `session`(`userID`) VALUES ('$userID')";
 
             $this->database->query($query);
 
@@ -79,15 +79,41 @@ class Nuuws
 
             $_SESSION['userID'] = $userID;
 
-//            echo "Location: " . DEFAULT_PATH_WEB; die;
             header("Location: " . DEFAULT_PATH_WEB);
         }
 
         else
-        {
-//            echo "Location: " . DEFAULT_PATH_WEB . 'login/failed'; die;
+
             header("Location: " . DEFAULT_PATH_WEB . 'login/failed');
-        }
+    }
+
+    public function getUser()
+    {
+        $query  = "SELECT `userID`, `userName`, `fName`, `lName`, `birthDat`, `createdTS`, `email`, `isActive`, `isAdmin` 
+                   FROM `user` ORDER BY `userID`";
+
+        $result = $this->database->query($query);
+
+        $user   = [];
+
+        if($this->database->mysqli_num_rows($result))
+
+            while($row = $this->database->fetch_object($result))
+
+                $user[] =
+                    [
+                        'userID'    => $row->userID,
+                        'userName'  => $row->userName,
+                        'fName'     => $row->fName,
+                        'lName'     => $row->lName,
+                        'birthDat'  => $row->birthDat,
+                        'createdTS' => $row->createdTS,
+                        'email'     => $row->email,
+                        'isActive'  => $row->isActive,
+                        'isAdmin'   => $row->isAdmin,
+                    ];
+
+        return $user;
     }
 
     /**

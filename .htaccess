@@ -18,6 +18,11 @@ RewriteRule ^user/(\d+)/.*$                 index.php?page=user&id=$1           
 RewriteRule ^artikel-einreichen\.?(html)?$  index.php?page=articleManagement       [NC,L]
 RewriteRule ^nachrichten\/(\d)+\/.*\.html$  index.php?page=article&id=$1           [NC,L]
 RewriteRule ^nachrichten\/?$                index.php?page=articles                [NC,L] # todo
-RewriteRule ^nachrichten\/(\d)+\/.*\/$      index.php?page=articles&cat=$1
-RewriteRule ^nachrichten\/andere\/$         index.php?page=articles&cat=a
+RewriteRule ^nachrichten\/(\d)+\/.*\/$      index.php?page=articles&cat=$1         [NC,L]
+RewriteRule ^nachrichten\/andere\/$         index.php?page=articles&cat=a          [NC,L]
+RewriteRule ^nachrichten-bearbeiten\/?$     index.php?page=edit-articles           [NC,L]
+
+# Backend
+
+RewriteRule ^backend\/?$                    backend.php                             [NC,L]
 

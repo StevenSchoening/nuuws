@@ -17,10 +17,10 @@ class NewsManagement{
         $this->database = isset($db) ? $db : Database::getLastInstance();
 
         if(isset($_POST['title']))
-
+        {
             self::createArticle();
+        }
     }
-
 
     public function getArticles()
     {
@@ -32,7 +32,7 @@ class NewsManagement{
                             
                   INNER JOIN `newsimage` ON newsimage.news = news.newsID
                     
-                  INNER JOIN `images` ON newsimage.images = images.imageID";
+                  INNER JOIN `images` ON newsimage.images = images.imageID WHERE news.published LIKE 1";
 
         if(is_numeric($selectedCategoryID))
 
@@ -136,95 +136,64 @@ class NewsManagement{
         return FALSE;
     }
 
-    public function createArticle(){
+    public function createArticle()
+    {
 
-        //todo add user id value
-        $title =   $this->database->real_escape($_POST['title']);
-        $content = $this->database->real_escape($_POST['content']);
+        //todo add user id value currently no userID function
+        $title     = $this->database->real_escape($_POST['title']);
+        $copyright = $this->database->real_escape($_POST['copyright']);
+        $content   = $this->database->real_escape($_POST['content']);
 
-
+        //copyright for Image (autor name)
         //todo add headerImage path and name to db, save image to path
-    //    $headerImage = $database->real_escape($_FILES['headerImage']);
+        //$headerImage = $database->real_escape($_FILES['headerImage']);
         //$destination = 'images-folder/';
         //$img=file_get_contents($link);
         //file_put_contents($destdir.substr($link, strrpos($link,'/')), $img);
 
-
-        $sql = "INSERT INTO `news`(`newsID`, `title`, `content`, `createdTS`, `userID`, `published`, `crawlerURI`) VALUES (NULL,'$title','$content', NULL, '0','0', '')";
-
+        $sql =
+            "INSERT INTO `news`(`newsID`, `title`, `content`, `createdTS`, `userID`, `published`, `crawlerURI`) VALUES (NULL,'$title','$content', NULL, '0','0', '')";
         $this->database->query($sql);
-
-        if($this->database->query($sql) === true){
-            echo "data was sent successfully!";
-        }else{
-            echo "somehow you got an unexpected error...but we are surely already working on it";
-        }
-
         // todo redirect
     }
 
-    public function searchArticle(){
+    public function searchArticle()
+    {
+        $searchArticleTitle = $this->database->real_escape($_POST['searchArticleFromTitle']);
+        $database           = Database::getLastInstance();
 
-        $database = Database::getLastInstance();
-        $searchArticleTitle = $database->real_escape($_POST['searchArticleFromTitle']);
-        $submitSearchArticle = $database->real_escape($_POST['submitSearchArticle']);
-
-
-        $sqlSearch = "SELECT * FROM `news` WHERE `title` LIKE '%$searchArticleTitle%'";
-
-        //$sql = "INSERT INTO `news`(`newsID`, `title`, `content`, `createdTS`, `userID`, `published`, `crawlerURI`) VALUES (NULL,'$title','$content', NULL, '0','0', '')";
+        $sqlSearch = "SELECT news.*, images.copyright, images.imagePath, images.title as imgTitle FROM `news`
+                            
+                           INNER JOIN `newsimage` ON newsimage.news = news.newsID
+                            
+                           INNER JOIN `images` ON newsimage.images = images.imageID
+                            
+                           WHERE news.`title` LIKE '%$searchArticleTitle%'";
 
         $result = $database->query($sqlSearch);
 
-        if(isset($submitSearchArticle))
+        if($this->database->mysqli_num_rows($result) && $row = $this->database->fetch_object($result))
         {
-            $articles = array();
-            while($row=mysqli_fetch_assoc($result))
-            {
 
-                $date = date_create($row['createdTS']);
-                $dateFormat = date_format($date,'d.m.Y');
+            $date           = date_create($row->createdTS);
+            $dateFormat     = date_format($date, 'd.m.Y');
+            $articleContent = [
+                'title'      => $row->title,
+                'content'    => $row->content,
+                'creator'    => $row->userID == 0 ? $row->copyright : "",
+                'imagePath'  => str_replace(DEFAULT_PATH_LOCAL, DEFAULT_PATH_WEB, $row->imagePath),
+                'imageTitle' => $row->imgTitle,
+                'timestamp'  => $dateFormat,
+                'newsId'     => $row->newsId,
+            ];
 
-                if(!empty($row['newID'])) {
-                    $articles[$row['newsID']] = $row['newsID'];
-                }
-                if(!empty($row['title'])) {
-                    $articles[$row['newsID']] = $row['title'];
-                }
-                if(!empty($dateFormat)) {
-                    $articles[$row['newsID']] = $dateFormat;
-                }
-                if(!empty($row['content'])) {
-                    $articles[$row['newsID']] = $row['content'];
-                }
+            //todo copyright for createArticle
 
-
-                echo '<div class="textBox">';
-                echo "<br>";
-                echo "Titel:";
-                echo '<h1 class="article_'.$row['newsID'].'">';
-                echo "{$row['title']}";echo"</h1><br>";
-                //echo "Autor:";
-                //echo "{$row['author']}";echo"<br>";
-                echo "erstellt am:";echo" $dateFormat";
-                echo "<br>";
-                echo "<br>";
-                echo "{$row['content']}";
-                echo "<br>";
-
-            }
-            var_dump($articles);
-            die();
+            return $articleContent;
+        } else
+        {
+            return [];
         }
-
-
-
-        if($database->query($sqlSearch) === true){
-            echo "data was sent successfully!";
-        }else{
-            echo "somehow you got an unexpected error...but we are surely already working on it";
-        }
-
     }
 }
 

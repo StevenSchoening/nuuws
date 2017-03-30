@@ -211,14 +211,18 @@ class SpiegelInterpreter extends Interpreter
      */
     public function getImageQuery()
     {
-        if(($ext = pathinfo($this->headerImage)['extension']) == "") return "";
+        if(!isset($this->headerImage) || ($ext = pathinfo($this->headerImage)['extension']) == "")
+        {
+            $image = self::imageRoot . 'fallback.png';
+
+            return "INSERT INTO `images`(`title`, `description`, `copyright`, `link`, `imagePath`) 
+                VALUES ('Nuuws', 'Nuuws', 'spiegel', '', '$image');";
+        }
 
     //  Saving Image locally
         $img = self::imageRoot . "sp/" . md5($this->headerImage) . rand(12,10000) . ".$ext";
 
         echo "<p>Speichere $this->headerImage als $img</p>";
-
-    //  todo verbindungs Tabelle
 
         file_put_contents($img, file_get_contents($this->headerImage));
 

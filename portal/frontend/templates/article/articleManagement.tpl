@@ -7,16 +7,17 @@
 <article>
 
 
-    <div class="tabs">
-        <a href="javascript:void(0)" id="articleOption_create">Artikel erstellen</a>
-        <a href="javascript:void(0)" id="articleOption_search">Artikel suchen</a>
-        <a href="javascript:void(0)" id="articleOption_change">Artikel bearbeiten</a>
-        <a href="javascript:void(0)" id="articleOption_delete"">Artikel löschen</a>
+    <div class="tabs articleManagement">
+        <a href="javascript:void(0)" id="articleOption_create" class="tabMarker">Artikel erstellen</a>
+        <a href="javascript:void(0)" id="articleOption_search">Artikel suchen & bearbeiten</a>
     </div>
 
     <br>
     <div id="createArticleContent" class="tabcontent">
         <form method="post" name="create_article" id="newsForm">
+            <label>Autor</label><br>
+            <input type="text" name="copyright" class="autor"><br><br>
+
             <label>Titel des Artikels</label><br>
             <input type="text" name="title" class="title"><br><br>
             {*<label>Header Image hinzufügen</label>*}
@@ -30,19 +31,12 @@
     </div>
     <br>
     <div id="searchArticleContent" class="tabcontent">
-        <form method="post" name="search_article" id="newsFormSearch">
+        <form method="post" action="nachrichten-bearbeiten" name="searchArticleContent" id="newsFormSearch">
             <label>Geben Sie hier den Titel des Artikels ein um den gewünschten Artikel zu finden!</label><br>
             <input type="text" name="searchArticleFromTitle" class="searchArticle" id="searchArticleFromTitle"><br><br>
             <input type="submit" name="submitSearchArticle" value="Beitrag suchen!">
         </form>
     </div>
-    <div id="changeArticle">
-
-    </div>
-    <div id="deleteArticle">
-
-    </div>
-
 </article>
 
 
