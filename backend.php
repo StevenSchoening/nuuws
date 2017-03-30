@@ -35,6 +35,12 @@ $smarty->display('portal/frontend/templates/header/header.tpl');
 //  Benutzerverwaltung
 //  ==================================
 
+if(isset($_GET['page']) && $_GET['page'] === "edit_user")
+{
+    include 'portal/backend/pages/edit_user.php';
+    die;
+}
+
 ?>
 
 <style>
@@ -95,13 +101,12 @@ $smarty->display('portal/frontend/templates/header/header.tpl');
 <?php
 
 $deleteImg  = '<img src="/nuuws/portal/assets/images/x.png" width="32" height="32">';
-$editImg    = '<img src="https://cdn4.iconfinder.com/data/icons/meBaze-Freebies/512/edit-notes.png" width="32" height="32">';
-$ampelRot   = '<img class="ampel" src="/nuuws/portal/assets/images/nicht_zugelassen.png" width="48" height="48">';
-$ampelGruen = '<img class="ampel" src="/nuuws/portal/assets/images/zugelassen.png" width="48" height="48">';
+$editImg    = '<img src="/nuuws/portal/assets/images/bearbeiten.png" width="32" height="32">';
+$ampelRot   = '<img class="ampel" src="/nuuws/portal/assets/images/nicht_zugelassen.png" width="64" height="64">';
+$ampelGruen = '<img class="ampel" src="/nuuws/portal/assets/images/zugelassen.png" width="64" height="64">';
 
 foreach($nuuws->getUser() as $user)
 {
-
     echo '<tr>';
 
     echo "<td>{$user['userName']}</td>";
@@ -114,7 +119,7 @@ foreach($nuuws->getUser() as $user)
     echo $user['isAdmin'] == "0" ? $ampelRot : $ampelGruen;
     echo "</td>";
 
-    echo "<td>$editImg</td>";
+    echo "<td><a href='/nuuws/backend/user/{$user['userID']}/{$user['userName']}.html'>$editImg</a></td>";
     echo "<td>$deleteImg</td>";
 
     echo '</tr>';

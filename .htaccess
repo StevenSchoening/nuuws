@@ -25,4 +25,5 @@ RewriteRule ^nachrichten-bearbeiten\/?$     index.php?page=edit-articles        
 # Backend
 
 RewriteRule ^backend\/?$                    backend.php                             [NC,L]
+RewriteRule ^backend\/user\/(\d+)\/.*\.html$ backend.php?page=edit_user&id=$1
 

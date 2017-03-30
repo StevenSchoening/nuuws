@@ -87,10 +87,13 @@ class Nuuws
             header("Location: " . DEFAULT_PATH_WEB . 'login/failed');
     }
 
-    public function getUser()
+    public function getUser($id = FALSE)
     {
+
+        $where = $id ? "WHERE `userID` LIKE '" . $this->database->real_escape($id) ."' " : '';
+
         $query  = "SELECT `userID`, `userName`, `fName`, `lName`, `birthDat`, `createdTS`, `email`, `isActive`, `isAdmin` 
-                   FROM `user` ORDER BY `userID`";
+                   FROM `user` {$where}ORDER BY `userID`";
 
         $result = $this->database->query($query);
 
