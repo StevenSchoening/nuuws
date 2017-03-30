@@ -8,18 +8,28 @@
 
 class NewsManagement
 {
-    private $database;
-
-    const displayedCategories = "('Wirtschaft', 'Politik', 'Panorama', 'Kultur', 'Sport', 'Gesundheit')";
+    private $database, $displayedCategories = '(';
 
     function __construct($db = NULL)
     {
         $this->database = isset($db) ? $db : Database::getLastInstance();
 
-        if(isset($_POST['title']))
+        if(sizeof($this->getCategories()) > 0)
         {
-            self::createArticle();
+            foreach($this->getCategories() as $cat)
+
+                $this->displayedCategories .= "'$cat', ";
+
+            $this->displayedCategories = substr($this->displayedCategories, 0, -2) . ')';
         }
+
+        else
+
+            $this->displayedCategories = '()';
+
+        if(isset($_POST['title']))
+
+            self::createArticle();
 
         if(isset($_POST['saveCategories']))
 
@@ -117,7 +127,7 @@ class NewsManagement
         {
             $query .= " WHERE `newsID` IN (SELECT `news` FROM `tagsinnews` WHERE `tags` NOT IN
                         (SELECT `category` FROM `categorynews` WHERE `category` IN 
-                        (SELECT `catID` FROM `category` WHERE `catName` NOT IN " . self::displayedCategories . ")
+                        (SELECT `catID` FROM `category` WHERE `catName` NOT IN " . $this->displayedCategories . ")
                         )
                         ) AND `news`.published LIKE 1";
         }
@@ -164,7 +174,7 @@ class NewsManagement
     {
         $categories = [];
 
-        $query      = "SELECT * FROM `category` WHERE `catName` IN " . self::displayedCategories;
+        $query      = "SELECT * FROM `category`";
 
         $result = $this->database->query($query);
 

@@ -94,7 +94,7 @@ $smarty->display('portal/frontend/templates/header/header.tpl');
 
 <?php
 
-$deleteImg = '<img src="http://www.freeiconspng.com/uploads/remove-icon-png-24.png" width="32" height="32">';
+$deleteImg = '<img src="/nuuws/portal/assets/" width="32" height="32">';
 
 $editImg = '<img src="https://cdn4.iconfinder.com/data/icons/meBaze-Freebies/512/edit-notes.png" width="32" height="32">';
 
