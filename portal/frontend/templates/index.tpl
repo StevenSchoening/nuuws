@@ -2,7 +2,7 @@
 
 <article>
 
-<h2>NUUWS</h2>
+HELLO WORLD
 
 </article>
 

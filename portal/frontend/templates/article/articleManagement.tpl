@@ -14,14 +14,16 @@
 
     <br>
     <div id="createArticleContent" class="tabcontent">
-        <form method="post" name="create_article" id="newsForm">
+        <form method="post" enctype="multipart/form-data" name="create_article" id="newsForm">
             <label>Autor</label><br>
             <input type="text" name="copyright" class="autor"><br><br>
 
             <label>Titel des Artikels</label><br>
             <input type="text" name="title" class="title"><br><br>
-            {*<label>Header Image hinzufügen</label>*}
-            {*<input name="image" accept="image/jpeg" type="file"><br><br>*}
+
+            <label>Header Image hinzufügen</label>
+            <input name="headerImage" accept="image/jpeg" maxlength="255" size="200" type="file"><br><br>
+
             <label>Inhalt des Artikels</label><br>
             <textarea name="content" rows="4" cols="50" class="content">
             </textarea><br>

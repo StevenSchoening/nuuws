@@ -262,7 +262,6 @@ class NewsManagement
 
         return FALSE;
     }
-
     public function createArticle()
     {
 
@@ -271,15 +270,20 @@ class NewsManagement
         $copyright = $this->database->real_escape($_POST['copyright']);
         $content   = $this->database->real_escape($_POST['content']);
 
-        //copyright for Image (autor name)
-        //todo add headerImage path and name to db, save image to path
-        //$headerImage = $database->real_escape($_FILES['headerImage']);
-        //$destination = 'images-folder/';
-        //$img=file_get_contents($link);
-        //file_put_contents($destdir.substr($link, strrpos($link,'/')), $img);
 
-        $sql =
-            "INSERT INTO `news`(`newsID`, `title`, `content`, `createdTS`, `userID`, `published`, `crawlerURI`) VALUES (NULL,'$title','$content', NULL, '0','0', '')";
+
+        //uploading headerImages to the image directory
+        $uploadDir = "F:/xamppAndPHP7/htdocs/nuuws/portal/assets/images/headerImages/";
+        $uploadFileTo = $uploadDir . basename($_FILES['headerImage']['name']);
+
+        move_uploaded_file($_FILES['headerImage']['tmp_name'], $uploadFileTo);
+
+        //todo add headerImage path and name to db
+        //copyright for Image (autor name)
+
+
+
+        $sql = "INSERT INTO `news`(`newsID`, `title`, `content`, `createdTS`, `userID`, `published`, `crawlerURI`) VALUES (NULL,'$title','$content', NULL, '0','0', '')";
         $this->database->query($sql);
         // todo redirect
     }
@@ -322,6 +326,7 @@ class NewsManagement
             return [];
         }
     }
+
 }
 
 

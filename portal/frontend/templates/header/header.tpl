@@ -9,5 +9,8 @@
 </head>
 <body>
 <header>
+    <a href="/nuuws">
+    <img class="nuuwsLogo" title='nuuwsLogo' src="/nuuws/portal/assets/images/Logo.png">
+    </a>
     {include file='portal/frontend/templates/nav/navigation.tpl'}
 </header>
