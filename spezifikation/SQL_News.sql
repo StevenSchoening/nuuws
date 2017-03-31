@@ -348,7 +348,7 @@ CREATE TABLE `user` (
   `isActive` tinyint(1) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL,
   `premium` int(10) NOT NULL,
-  `adress` int(10) NOT NULL,
+  `address` int(10) NOT NULL,
   `bankDetails` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
