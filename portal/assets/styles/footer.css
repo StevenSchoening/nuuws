@@ -24,3 +24,12 @@ footer .footer_content a {
 footer .footer_content a:hover {
     color: #c7d308;
 }
+
+@media screen and (max-width: 700px)
+{
+    footer .premiumLink,
+    #formatPremium
+    {
+        display: none;
+    }
+}

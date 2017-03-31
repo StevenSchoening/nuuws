@@ -10,11 +10,7 @@ require_once '_functions/_init.php';
 
 $page      = isset($_GET['page']) ? $_GET['page'] : FALSE;
 
-$isAdmin   = $nuuws->getActiveUser() != FALSE ? $nuuws->getActiveUser()->isAdmin() : FALSE;
-$isLogedIn = $nuuws->getActiveUser() != FALSE;
 
-$smarty->assign('isAdmin', $isAdmin);
-$smarty->assign('isLogedIn', $isLogedIn);
 
 switch($page)
 {

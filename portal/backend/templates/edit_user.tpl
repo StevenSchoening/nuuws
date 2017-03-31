@@ -47,7 +47,7 @@
 
             <div>
                 <label>Benutzername</label>
-                <input type="text" name="username" placeholder="Benutzername" value="{$user['userName']}">
+                <input type="text" disabled name="username" placeholder="Benutzername" value="{$user['userName']}">
             </div>
 
             <div>
@@ -62,28 +62,50 @@
 
             <div>
                 <label>Nachname</label>
-                <input type="text" name="nname" value="{$user['lName']}">
+                <input type="text" name="lname" value="{$user['lName']}">
             </div>
 
             <div>
                 <label>Geburtsdatum</label>
-                <input type="date" name="birthdate" value="{$user['birthDat']}">
+                <input type="date" name="birthdate" value="{$user['birthDat']|date_format:"%Y-%m-%d"}">
+            </div>
+
+            <div>
+                <label>Premium bis</label>
+                <input type="date" name="premium" value="{$user['premiumValid']|date_format:"%Y-%m-%d"}">
             </div>
 
             <div>
                 <label>Admin</label>
                 <select name="admin">
-                    {*todo if else*}
-                    <option value="1">Ja</option>
-                    <option value="2">Nein</option>
+                    {if $user['isAdmin'] == 1}
+                        <option value="1" selected>Ja</option>
+                    {else}
+                        <option value="1">Ja</option>
+                    {/if}
+
+                    {if $user['isAdmin'] == 0}
+                        <option value="0" selected>Nein</option>
+                    {else}
+                        <option value="0">Nein</option>
+                    {/if}
                 </select>
             </div>
 
             <div>
                 <label>Konto aktiviert</label>
-                <select name="admin">
-                    <option value="1">Ja</option>
-                    <option value="2">Nein</option>
+                <select name="active">
+                    {if $user['isActive'] == 1}
+                        <option value="1" selected>Ja</option>
+                    {else}
+                        <option value="1">Ja</option>
+                    {/if}
+
+                    {if $user['isActive'] == 0}
+                        <option value="0" selected>Nein</option>
+                    {else}
+                        <option value="0">Nein</option>
+                    {/if}
                 </select>
             </div>
 

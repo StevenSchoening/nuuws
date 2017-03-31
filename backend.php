@@ -23,11 +23,11 @@ if(isset($_POST['submit']))
 //  Backend
 //  ==================================
 
-$isAdmin   = $nuuws->getActiveUser() != FALSE ? $nuuws->getActiveUser()->isAdmin() : FALSE;
-$isLogedIn = $nuuws->getActiveUser() != FALSE;
-
-$smarty->assign('isAdmin', $isAdmin);
-$smarty->assign('isLogedIn', $isLogedIn);
+//$isAdmin   = $nuuws->getActiveUser() != FALSE ? $nuuws->getActiveUser()->isAdmin() : FALSE;
+//$isLogedIn = $nuuws->getActiveUser() != FALSE;
+//
+//$smarty->assign('isAdmin', $isAdmin);
+//$smarty->assign('isLogedIn', $isLogedIn);
 
 $smarty->display('portal/frontend/templates/header/header.tpl');
 
@@ -85,7 +85,7 @@ if(isset($_GET['page']) && $_GET['page'] === "edit_user")
     <table id="user-control">
         <thead>
             <tr>
-                <td>Username</td>
+                <td style="padding-right: 5px;">Username</td>
                 <td>Vorname</td>
                 <td>Nachname</td>
                 <td>Registriert am</td>

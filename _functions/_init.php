@@ -58,8 +58,16 @@ spl_autoload_register(function ($class)         # gets called if a class is used
 });
 
 # load database
-$db = new Database;
+$db    = new Database;
 $db->select_db("nuuws");
 
 $nm    = new NewsManagement;
 $nuuws = new Nuuws;
+
+$isAdmin   = $nuuws->getActiveUser() != FALSE ? $nuuws->getActiveUser()->isAdmin() : FALSE;
+$isLogedIn = $nuuws->getActiveUser() != FALSE;
+$isPremium = $nuuws->getActiveUser() != FALSE ? $nuuws->getActiveUser()->userIsPremium() : FALSE;
+
+$smarty->assign('isAdmin', $isAdmin);
+$smarty->assign('isLogedIn', $isLogedIn);
+$smarty->assign('isPremium', $isPremium);

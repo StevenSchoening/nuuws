@@ -22,7 +22,36 @@ class Nuuws
 
             $this->register();
 
+        if(isset($_POST['edit']) && $_POST['edit'] === 'Benutzer bearbeiten')
+
+            $this->editUser();
+
         $this->setActiveUser();
+    }
+
+    private function editUser()
+    {
+
+        foreach($_POST as &$value)
+
+            $value = $this->database->real_escape($value);
+
+        $premiumValid = $_POST['premium'] . " 00:00:00";
+        $birthDat     = $_POST['birthdate'] . " 00:00:00";
+        $isAdmin      = $_POST['admin'];
+        $isActive     = $_POST['active'];
+        $email        = $_POST['email'];
+        $lname        = $_POST['lname'];
+        $fname        = $_POST['fname'];
+        $userID       = $_POST['id'];
+
+        $query        = "UPDATE `user` SET `fName` = '$fname', `lName` = '$lname',
+                        `birthDat` = '$birthDat',`email` = '$email',`isActive` = '$isActive', `isAdmin` = '$isAdmin',
+                        `premiumvalid` = '$premiumValid' WHERE `userID` LIKE '$userID'";
+
+        $this->database->query($query);
+
+        header("Location: " . DEFAULT_PATH_WEB . "backend");
     }
 
     private function register()
@@ -89,10 +118,9 @@ class Nuuws
 
     public function getUser($id = FALSE)
     {
-
         $where = $id ? "WHERE `userID` LIKE '" . $this->database->real_escape($id) ."' " : '';
 
-        $query  = "SELECT `userID`, `userName`, `fName`, `lName`, `birthDat`, `createdTS`, `email`, `isActive`, `isAdmin` 
+        $query  = "SELECT `userID`, `userName`, `fName`, `lName`, `premiumvalid`, `birthDat`, `createdTS`, `email`, `isActive`, `isAdmin` 
                    FROM `user` {$where}ORDER BY `userID`";
 
         $result = $this->database->query($query);
@@ -105,15 +133,16 @@ class Nuuws
 
                 $user[] =
                     [
-                        'userID'    => $row->userID,
-                        'userName'  => $row->userName,
-                        'fName'     => $row->fName,
-                        'lName'     => $row->lName,
-                        'birthDat'  => $row->birthDat,
-                        'createdTS' => $row->createdTS,
-                        'email'     => $row->email,
-                        'isActive'  => $row->isActive,
-                        'isAdmin'   => $row->isAdmin,
+                        'userID'       => $row->userID,
+                        'userName'     => $row->userName,
+                        'fName'        => $row->fName,
+                        'lName'        => $row->lName,
+                        'birthDat'     => $row->birthDat,
+                        'createdTS'    => $row->createdTS,
+                        'email'        => $row->email,
+                        'isActive'     => $row->isActive,
+                        'isAdmin'      => $row->isAdmin,
+                        'premiumValid' => $row->premiumvalid,
                     ];
 
         return $user;
