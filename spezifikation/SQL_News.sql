@@ -23,11 +23,11 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `adress`
+-- Table structure for table `address`
 --
 
-CREATE TABLE `adress` (
-  `adressID` int(10) NOT NULL,
+CREATE TABLE `address` (
+  `addressID` int(10) NOT NULL,
   `street` varchar(200) NOT NULL,
   `homeNo` varchar(10) NOT NULL,
   `zipCode` varchar(10) NOT NULL,
@@ -368,8 +368,8 @@ INSERT INTO `user` (`userID`, `userName`, `password`, `fName`, `lName`, `birthDa
 --
 -- Indexes for table `adress`
 --
-ALTER TABLE `adress`
-  ADD PRIMARY KEY (`adressID`);
+ALTER TABLE `address`
+  ADD PRIMARY KEY (`addressID`);
 
 --
 -- Indexes for table `bankdetails`
