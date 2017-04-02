@@ -100,40 +100,11 @@ class SpiegelInterpreter extends Interpreter
     }
 
     /**
-     * extracts teaser images and information about them
-     *
-     * is automatically called by detectContent()
-     *
-     * @param $html object from detectContent()
-     */
-    private function detectImages($html)
-    {
-//      Header Image
-        if(sizeof($image = $html->find('.image-buttons-panel')) !== 0)
-        {
-            self::extractImage($image);
-
-            if($this->headerImage !== NULL)
-
-                return;
-        }
-
-        if(sizeof($image = $html->find('.spPanoImageTeaserPic')) !== 0)
-        {
-            self::extractImage($image);
-
-            if($this->headerImage !== NULL)
-
-                return;
-        }
-    }
-
-    /**
      * internal function of detectImages()
      *
      * @param $image object
      */
-    private function extractImage($image)
+    protected function extractImage($image)
     {
         $this->headerImage = @$image[0]->find('a')[0]->innertext;
 
@@ -170,21 +141,34 @@ class SpiegelInterpreter extends Interpreter
         $this->headerImage                = $src[2];
     }
 
+
     /**
-     * News insert query. Will be automatically called and executed by the __destruct function
+     * extracts teaser images and information about them
      *
-     * @return string MySql query
+     * is automatically called by detectContent()
+     *
+     * @param $html object from detectContent()
      */
-    public function getInsertQuery()
+    private function detectImages($html)
     {
-        $escapedTitle   = Database::getLastInstance()->real_escape($this->title);
-        $escapedContent = Database::getLastInstance()->real_escape($this->content);
+//      Header Image
+        if(sizeof($image = $html->find('.image-buttons-panel')) !== 0)
+        {
+            self::extractImage($image);
 
-        $tsStr = $this->timestamp === FALSE ? "NULL" : "'$this->timestamp'";
+            if($this->headerImage !== NULL)
 
-        return "INSERT INTO `news`(`newsID`, `title`, `content`, `createdTS`, `userID`, `published`, `crawlerURI`) 
-                VALUES (
-                NULL, '$escapedTitle', '$escapedContent', $tsStr, '0', '1', '$this->uri');";
+                return;
+        }
+
+        if(sizeof($image = $html->find('.spPanoImageTeaserPic')) !== 0)
+        {
+            self::extractImage($image);
+
+            if($this->headerImage !== NULL)
+
+                return;
+        }
     }
 
     /**
@@ -203,106 +187,6 @@ class SpiegelInterpreter extends Interpreter
             return FALSE;
     }
 
-    /**
-     * Saves an images from a page locally and
-     * returns an insert query with the information
-     *
-     * @return string MySql query
-     */
-    public function getImageQuery()
-    {
-        if(!isset($this->headerImage) || ($ext = pathinfo($this->headerImage)['extension']) == "")
-        {
-            $image = self::imageRoot . 'fallback.png';
-
-            return "INSERT INTO `images`(`title`, `description`, `copyright`, `link`, `imagePath`) 
-                VALUES ('Nuuws', 'Nuuws', 'spiegel', '', '$image');";
-        }
-
-    //  Saving Image locally
-        $img = self::imageRoot . "sp/" . md5($this->headerImage) . rand(12,10000) . ".$ext";
-
-        echo "<p>Speichere $this->headerImage als $img</p>";
-
-        file_put_contents($img, file_get_contents($this->headerImage));
-
-        $this->headerImageInfo['title'] = Database::getLastInstance()->real_escape($this->headerImageInfo['title']);
-
-    //  Insert to Database
-        return "INSERT INTO `images`(`title`, `description`, `copyright`, `link`, `imagePath`) 
-                VALUES ('{$this->headerImageInfo['title']}', '', 'spiegel', '{$this->headerImage}', '$img');";
-    }
-
-    /**
-     * @return string MySql query with all new tags.
-     */
-    public function getTagInsertQuery()
-    {
-        $db = Database::getLastInstance();
-
-        $tagsToInsert = $this->tags;
-
-        $query  = "SELECT * FROM `tags` WHERE `tagsName` IN (". self::valueArrToMySqlString($this->tags) .")";
-
-        $result = $db->query($query);
-
-        if($db->mysqli_num_rows($result))
-
-            while($row = $db->fetch_object($result))
-
-                foreach($tagsToInsert as $i => $tag)
-
-                    if($tag == $row->tagsName)
-
-                        unset($tagsToInsert[$i]);
-
-        if(sizeof($tagsToInsert) == 0) return "";
-
-        $query = "INSERT INTO `tags`(`tagsName`) VALUES ";
-
-        foreach($tagsToInsert as $tag)
-
-            $query .= "('$tag'), ";
-
-        return substr($query, 0, -2) . ';';
-    }
-
-    /**
-     * @return string MySql query with every tag used in news
-     */
-    public function getTagInNewsQuery()
-    {
-        $db     = Database::getLastInstance();
-
-        $query  = "SELECT `tagsID` FROM `tags` WHERE `tagsName` IN (". self::valueArrToMySqlString($this->tags) .")";
-
-        $result = $db->query($query);
-
-        $tagIds = [];
-
-        if($db->mysqli_num_rows($result))
-
-            while($row = $db->fetch_object($result))
-
-                $tagIds[] = $row->tagsID;
-
-        $query = "INSERT INTO `tagsinnews`(`news`, `tags`) VALUES ";
-
-        foreach($tagIds as $id);
-
-            $query .= "('{$this->newsId}', '$id'), ";
-
-        return substr($query, 0, -2) . ';';
-    }
-
-    /**
-     * @return string
-     */
-    public function getNewsImageQuery()
-    {
-        return is_numeric($this->imgId) && is_numeric($this->newsId) ? "INSERT INTO `newsimage`(`images`, `news`) VALUES ('$this->imgId', '$this->newsId');"
-                                                                     : "";
-    }
 
     public function resultIsValid()
     {
@@ -319,35 +203,35 @@ class SpiegelInterpreter extends Interpreter
         return "Spiegel";
     }
 
-    public function getCategoryQuery()
-    {
-        if(sizeof($this->tags) === 0)
+//    public function getCategoryQuery()
+//    {
+//        if(sizeof($this->tags) === 0)
+//
+//            return "";
+//
+//        $cat    = Database::getLastInstance()->real_escape($this->tags[0]);
+//
+//        $query  = "SELECT * FROM `category` WHERE `catName` LIKE '$cat'";
+//
+//        $result = Database::getLastInstance()->query($query);
+//
+//        if(Database::getLastInstance()->mysqli_num_rows($result) == 0)
+//
+//            return "INSERT INTO `category`(`catName`) VALUES ('$cat')";
+//
+//        else
+//        {
+//            $row = Database::getLastInstance()->fetch_object($result);
+//
+//            $this->catID = $row->catID;
+//
+//            return "";
+//        }
+//    }
 
-            return "";
-
-        $cat    = Database::getLastInstance()->real_escape($this->tags[0]);
-
-        $query  = "SELECT * FROM `category` WHERE `catName` LIKE '$cat'";
-
-        $result = Database::getLastInstance()->query($query);
-
-        if(Database::getLastInstance()->mysqli_num_rows($result) == 0)
-
-            return "INSERT INTO `category`(`catName`) VALUES ('$cat')";
-
-        else
-        {
-            $row = Database::getLastInstance()->fetch_object($result);
-
-            $this->catID = $row->catID;
-
-            return "";
-        }
-    }
-
-    public function getCategoryInNewsQuery()
-    {
-        return "INSERT INTO `categorynews`(`category`, `news`) 
-                VALUES ('$this->catID', '$this->newsId')";
-    }
+//    public function getCategoryInNewsQuery()
+//    {
+//        return "INSERT INTO `categorynews`(`category`, `news`)
+//                VALUES ('$this->catID', '$this->newsId')";
+//    }
 }

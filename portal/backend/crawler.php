@@ -16,13 +16,15 @@ ini_set('max_execution_time', -1);
 
 Crawler::addToWhiteList([
     '#[^s]spiegel\.de#i',
+    '#weser\-kurier\.de#i',
 //    '#sueddeutsche\.de#i',
 ]);
 
 #========================= start locations ========================
 
 $uris = [
-    'http://news.google.com/' => NULL,
+//    'http://news.google.com/' => NULL,
+    'http://www.weser-kurier.de' => NULL,
 //    'http://spiegel.de' => NULL,
 ];
 
@@ -36,7 +38,6 @@ if(isset($_GET['reset']))
   Database::getLastInstance()->query("TRUNCATE TABLE `tagsinnews`");
   Database::getLastInstance()->query("TRUNCATE TABLE `images`");
   Database::getLastInstance()->query("TRUNCATE TABLE `newsimage`");
-  Database::getLastInstance()->query("TRUNCATE TABLE `categorynews`");
   Database::getLastInstance()->query("TRUNCATE TABLE `category`");
 }
 #========================== crawling ==============================
@@ -51,6 +52,6 @@ foreach($uris as $uri => &$crawler)
     $crawler->save();
 }
 
-//Crawler::cleanDatabase();
+Crawler::cleanDatabase();
 
 //Nuuws::reloadPageIn(250000);

@@ -32,6 +32,12 @@ if($db->mysqli_num_rows($result))
 
                 break;
 
+            case 'Weser-kurier' :
+
+                $interpreter = new WeserKurierInterpreter($row->uri, $row->uriID);
+
+                break;
+
             default :
 
                 $query = "UPDATE `crawleruri` SET `interpreted` = '1' WHERE `uriID` LIKE '{$row->uriID}'";
