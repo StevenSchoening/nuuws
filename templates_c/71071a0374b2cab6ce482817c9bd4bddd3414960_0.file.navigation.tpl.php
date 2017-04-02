@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.30, created on 2017-03-31 11:11:46
+/* Smarty version 3.1.30, created on 2017-04-02 16:45:27
   from "C:\xampp\htdocs\nuuws\portal\frontend\templates\nav\navigation.tpl" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_58de1d5253aea0_44691184',
+  'unifunc' => 'content_58e10e8787eae2_40980818',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_58de1d5253aea0_44691184 (Smarty_Internal_Template $_smarty_tpl) {
+function content_58e10e8787eae2_40980818 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <nav>
     <ul class="navigation_list">

@@ -2,7 +2,19 @@
 
 <section id="headerImage">
 
-</section><img title='{$articleContent['imageTitle']}' src="{$articleContent['imagePath']}">
+    {if isset($smarty.get.cat)}
+        {if $smarty.get.cat == 1}
+            <img class="category-{$smarty.get.cat}" title='Kategorie Wirtschaft' src="/nuuws/portal/assets/images/headerImages/Wirtschaft_weiss.png">
+        {elseif $smarty.get.cat ==2}
+            <img class="category-{$smarty.get.cat}" title='Kategorie Politik' src="/nuuws/portal/assets/images/headerImages/Politik_weiss.png">
+        {elseif $smarty.get.cat == 3}
+            <img class="category-{$smarty.get.cat}" title='Kategorie Digital' src="/nuuws/portal/assets/images/headerImages/Digital_weiss.png">
+        {elseif $smarty.get.cat == 4}
+            <img class="category-{$smarty.get.cat}" title='Kategorie Sport' src="/nuuws/portal/assets/images/headerImages/Sport_weiss.png">
+        {/if}
+    {/if}
+
+</section>
 
 <article>
     <div id="articlesWrapper">

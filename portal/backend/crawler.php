@@ -16,15 +16,15 @@ ini_set('max_execution_time', -1);
 
 Crawler::addToWhiteList([
     '#[^s]spiegel\.de#i',
-    '#weser\-kurier\.de#i',
+//    '#weser\-kurier\.de#i',
 //    '#sueddeutsche\.de#i',
 ]);
 
 #========================= start locations ========================
 
 $uris = [
-//    'http://news.google.com/' => NULL,
-    'http://www.weser-kurier.de' => NULL,
+    'http://news.google.com/' => NULL,
+//    'http://www.weser-kurier.de' => NULL,
 //    'http://spiegel.de' => NULL,
 ];
 

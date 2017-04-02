@@ -1,7 +1,7 @@
 {include file='portal/frontend/templates/header/header.tpl'}
 
 <section id="headerImage">
-    <img src="portal/assets/images/loipen.jpeg">
+    <img class="shadow" src="portal/assets/images/loipen.jpeg">
 </section>
 
 <article>
@@ -21,7 +21,7 @@
             <label>Titel des Artikels</label><br>
             <input type="text" name="title" class="title"><br><br>
 
-            <label>Header Image hinzufügen</label>
+            <label>Bild hinzufügen</label>
             <input name="headerImage" accept="image/jpeg" maxlength="255" size="200" type="file"><br><br>
 
             <label>Inhalt des Artikels</label><br>
