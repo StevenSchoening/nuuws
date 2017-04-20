@@ -6,7 +6,7 @@
  * Time: 09:11
  */
 
-class NewsManagement
+class newsmanagement
 {
     private $database, $displayedCategories = '(';
 

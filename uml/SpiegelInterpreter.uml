@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Diagram>
   <ID>PHP</ID>
-  <OriginalElement>\Interpreter</OriginalElement>
+  <OriginalElement>\SpiegelInterpreter</OriginalElement>
   <nodes>
     <node x="195.0" y="0.0">\IInterpreter</node>
+    <node x="178.0" y="1640.0">\SpiegelInterpreter</node>
     <node x="0.0" y="430.0">\Interpreter</node>
   </nodes>
   <notes />
   <edges>
+    <edge source="\SpiegelInterpreter" target="\Interpreter">
+      <point x="0.0" y="-190.5" />
+      <point x="0.0" y="580.0" />
+    </edge>
     <edge source="\Interpreter" target="\IInterpreter">
       <point x="0.0" y="-580.0" />
       <point x="0.0" y="190.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="69.5" y="72.0" />
+  <settings layout="Hierarchic Group" zoom="1.0" x="96.0" y="120.5" />
   <SelectedNodes>
-    <node>\Interpreter</node>
+    <node>\SpiegelInterpreter</node>
   </SelectedNodes>
   <Categories>
     <Category>Fields</Category>
