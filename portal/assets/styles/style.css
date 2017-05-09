@@ -24,7 +24,7 @@ header > nav{
 header > nav ul{
     width:70%;
     top: 7px;
-    left: -145px;
+    left: 10%;
     position: absolute;
 }
 .navigation_list li{
