@@ -127,6 +127,9 @@ div#articlesWrapper
     .navigation_list {
         display: none;
     }
+    img.premium{
+        display:none;
+    }
 
     .dropdown {
         display: block;
