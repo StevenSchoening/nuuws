@@ -1,7 +1,7 @@
 {include file='portal/frontend/templates/header/header.tpl'}
 
 <section id="headerImage">
-    <img class="shadow" src="portal/assets/images/loipen.jpeg">
+    <img class="articleManagementHeader" src="portal/assets/images/headerImages/artikelverwaltung.png">
 </section>
 
 <article>

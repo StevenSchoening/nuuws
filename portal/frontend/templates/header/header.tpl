@@ -9,7 +9,7 @@
 </head>
 <body>
 <header>
-    <a href="/nuuws">
+    <a href="/nuuws" class="logoLink">
     <img class="nuuwsLogo" title='nuuwsLogo' src="/nuuws/portal/assets/images/Logo.png">
     </a>
     {include file='portal/frontend/templates/nav/navigation.tpl'}

@@ -113,3 +113,66 @@ div#articlesWrapper
 #articlesWrapper h1{
     margin-bottom: 15px
 }
+
+@media only screen and (max-width: 500px) {
+    aside.nuuwsSpecial{
+        display:none!important;
+    }
+    .themeBox{
+        display:none;
+    }
+}
+
+aside.nuuwsSpecial img{
+    width:600px;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+
+
+.themeBox{
+    padding-top:50px;
+    width:840px;
+    height:425px;
+    position: absolute;
+
+    display:inline-block;
+}
+.themeBox img{
+    border:solid black;
+}
+.themeBox img.regio{
+    position: absolute;
+    left:0px;
+    top:0px;
+}
+.themeBox img.technik{
+    position: absolute;
+    left: 220px;
+    top: 0px;
+}
+.themeBox img.politik{
+    position: absolute;
+    left: 490px;
+    top: 0px;
+}
+.themeBox img.wirtschaft{
+    position: absolute;
+    top: 275px;
+    left: 215px;
+}
+.themeBox img.digital{
+    position: absolute;
+    top: 0px;
+    left: 760px;
+}
+.themeBox img.sport{
+    position: absolute;
+    top: 0px;
+    left: 979px;
+}
+
+
+
+

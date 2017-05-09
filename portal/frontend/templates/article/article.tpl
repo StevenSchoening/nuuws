@@ -12,6 +12,7 @@
             {$articleContent['content']}
         </div>
     </section>
+    {include file='portal/frontend/templates/aside/premium.tpl'}
 </article>
 
 

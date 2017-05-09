@@ -1,8 +1,8 @@
 {include file='portal/frontend/templates/header/header.tpl'}
 
-<!--<section id="headerImage">
-    <img src="portal/assets/images/loipen.jpeg">
-</section>-->
+<section id="headerImage">
+    <img class="articleManagementHeader" src="portal/assets/images/headerImages/artikelverwaltung.png">
+</section>
 
 <article>
 
@@ -23,7 +23,7 @@
     <br>
 </article>
 
-{*include file='portal/frontend/templates/footer/footer.tpl'*}
+{include file='portal/frontend/templates/footer/footer.tpl'}
 
 
 </body>

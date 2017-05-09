@@ -1,5 +1,9 @@
 {include file='portal/frontend/templates/header/header.tpl'}
 
+<section id="headerImage">
+    <img class="articleManagementHeader" src="portal/assets/images/headerImages/artikelverwaltung.png">
+</section>
+
 <article>
     <div id="articlesWrapper">
 

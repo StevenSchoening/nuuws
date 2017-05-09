@@ -12,8 +12,9 @@
         {elseif $smarty.get.cat == 4}
             <img class="category-{$smarty.get.cat}" title='Kategorie Sport' src="/nuuws/portal/assets/images/headerImages/Sport_weiss.png">
         {/if}
+    {else}
+        <img class="category" title='Kategorie' src="/nuuws/portal/assets/images/headerImages/Anderes_weiss.png">
     {/if}
-
 </section>
 
 <article>
@@ -57,5 +58,7 @@
 
         {/foreach}
     </div>
+
+    {include file='portal/frontend/templates/aside/premium.tpl'}
 </article>
 {include file='portal/frontend/templates/footer/footer.tpl'}
